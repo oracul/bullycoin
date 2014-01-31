@@ -1,9 +1,9 @@
-Megacoin 0.8.99 BETA
+bullyon 0.8.99 BETA
 ====================
 
 Copyright (c) 2009-2013 Bitcoin Developers
 Copyright (c) 2013-2079 Dr. Kimoto Chan
-Copyright (c) 2013-2079 The Megacoin developers
+Copyright (c) 2013-2079 The bullyon developers
 
 Distributed under the MIT/X11 software license, see the accompanying
 file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -13,7 +13,7 @@ cryptographic software written by Eric Young ([eay@cryptsoft.com](mailto:eay@cry
 
 Intro
 ---------------------
-Megacoin is a free open source peer-to-peer electronic cash system that is
+bullyon is a free open source peer-to-peer electronic cash system that is
 completely decentralized, without the need for a central server or trusted
 parties.  Users hold the crypto keys to their own money and transact directly
 with each other, with the help of a P2P network to check for double-spending.
@@ -21,15 +21,15 @@ with each other, with the help of a P2P network to check for double-spending.
 
 Setup
 ---------------------
-You need the Qt4 run-time libraries to run Megacoin-Qt. On Debian or Ubuntu:
+You need the Qt4 run-time libraries to run bullyon-Qt. On Debian or Ubuntu:
 	`sudo apt-get install libqtgui4`
 
 Unpack the files into a directory and run:
 
-- bin/32/megacoin-qt (GUI, 32-bit)
-- bin/32/megacoind (headless, 32-bit)
-- bin/64/megacoin-qt (GUI, 64-bit)
-- bin/64/megacoind (headless, 64-bit)
+- bin/32/bullyon-qt (GUI, 32-bit)
+- bin/32/bullyond (headless, 32-bit)
+- bin/64/bullyon-qt (GUI, 64-bit)
+- bin/64/bullyond (headless, 64-bit)
 
 
 

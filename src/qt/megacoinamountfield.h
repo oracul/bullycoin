@@ -1,5 +1,5 @@
-#ifndef MEGACOINAMOUNTFIELD_H
-#define MEGACOINAMOUNTFIELD_H
+#ifndef bullyonAMOUNTFIELD_H
+#define bullyonAMOUNTFIELD_H
 
 #include <QWidget>
 
@@ -8,16 +8,16 @@ class QDoubleSpinBox;
 class QValueComboBox;
 QT_END_NAMESPACE
 
-/** Widget for entering megacoin amounts.
+/** Widget for entering bullyon amounts.
   */
-class MegacoinAmountField: public QWidget
+class bullyonAmountField: public QWidget
 {
     Q_OBJECT
 
     Q_PROPERTY(qint64 value READ value WRITE setValue NOTIFY textChanged USER true)
 
 public:
-    explicit MegacoinAmountField(QWidget *parent = 0);
+    explicit bullyonAmountField(QWidget *parent = 0);
 
     qint64 value(bool *valid=0) const;
     void setValue(qint64 value);
@@ -58,4 +58,4 @@ private slots:
 
 };
 
-#endif // MEGACOINAMOUNTFIELD_H
+#endif // bullyonAMOUNTFIELD_H

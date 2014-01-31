@@ -1,7 +1,7 @@
-#include "megacoinamountfield.h"
+#include "bullyonamountfield.h"
 
 #include "qvaluecombobox.h"
-#include "megacoinunits.h"
+#include "bullyonunits.h"
 #include "guiconstants.h"
 
 #include <QHBoxLayout>
@@ -10,7 +10,7 @@
 #include <QApplication>
 #include <qmath.h> // for qPow()
 
-MegacoinAmountField::MegacoinAmountField(QWidget *parent):
+bullyonAmountField::bullyonAmountField(QWidget *parent):
         QWidget(parent), amount(0), currentUnit(-1)
 {
     amount = new QDoubleSpinBox(this);
@@ -23,7 +23,7 @@ MegacoinAmountField::MegacoinAmountField(QWidget *parent):
     QHBoxLayout *layout = new QHBoxLayout(this);
     layout->addWidget(amount);
     unit = new QValueComboBox(this);
-    unit->setModel(new MegacoinUnits(this));
+    unit->setModel(new bullyonUnits(this));
     layout->addWidget(unit);
     layout->addStretch(1);
     layout->setContentsMargins(0,0,0,0);
@@ -41,7 +41,7 @@ MegacoinAmountField::MegacoinAmountField(QWidget *parent):
     unitChanged(unit->currentIndex());
 }
 
-void MegacoinAmountField::setText(const QString &text)
+void bullyonAmountField::setText(const QString &text)
 {
     if (text.isEmpty())
         amount->clear();
@@ -49,18 +49,18 @@ void MegacoinAmountField::setText(const QString &text)
         amount->setValue(text.toDouble());
 }
 
-void MegacoinAmountField::clear()
+void bullyonAmountField::clear()
 {
     amount->clear();
     unit->setCurrentIndex(0);
 }
 
-bool MegacoinAmountField::validate()
+bool bullyonAmountField::validate()
 {
     bool valid = true;
     if (amount->value() == 0.0)
         valid = false;
-    if (valid && !MegacoinUnits::parse(currentUnit, text(), 0))
+    if (valid && !bullyonUnits::parse(currentUnit, text(), 0))
         valid = false;
 
     setValid(valid);
@@ -68,7 +68,7 @@ bool MegacoinAmountField::validate()
     return valid;
 }
 
-void MegacoinAmountField::setValid(bool valid)
+void bullyonAmountField::setValid(bool valid)
 {
     if (valid)
         amount->setStyleSheet("");
@@ -76,7 +76,7 @@ void MegacoinAmountField::setValid(bool valid)
         amount->setStyleSheet(STYLE_INVALID);
 }
 
-QString MegacoinAmountField::text() const
+QString bullyonAmountField::text() const
 {
     if (amount->text().isEmpty())
         return QString();
@@ -84,7 +84,7 @@ QString MegacoinAmountField::text() const
         return amount->text();
 }
 
-bool MegacoinAmountField::eventFilter(QObject *object, QEvent *event)
+bool bullyonAmountField::eventFilter(QObject *object, QEvent *event)
 {
     if (event->type() == QEvent::FocusIn)
     {
@@ -105,16 +105,16 @@ bool MegacoinAmountField::eventFilter(QObject *object, QEvent *event)
     return QWidget::eventFilter(object, event);
 }
 
-QWidget *MegacoinAmountField::setupTabChain(QWidget *prev)
+QWidget *bullyonAmountField::setupTabChain(QWidget *prev)
 {
     QWidget::setTabOrder(prev, amount);
     return amount;
 }
 
-qint64 MegacoinAmountField::value(bool *valid_out) const
+qint64 bullyonAmountField::value(bool *valid_out) const
 {
     qint64 val_out = 0;
-    bool valid = MegacoinUnits::parse(currentUnit, text(), &val_out);
+    bool valid = bullyonUnits::parse(currentUnit, text(), &val_out);
     if(valid_out)
     {
         *valid_out = valid;
@@ -122,18 +122,18 @@ qint64 MegacoinAmountField::value(bool *valid_out) const
     return val_out;
 }
 
-void MegacoinAmountField::setValue(qint64 value)
+void bullyonAmountField::setValue(qint64 value)
 {
-    setText(MegacoinUnits::format(currentUnit, value));
+    setText(bullyonUnits::format(currentUnit, value));
 }
 
-void MegacoinAmountField::unitChanged(int idx)
+void bullyonAmountField::unitChanged(int idx)
 {
     // Use description tooltip for current unit for the combobox
     unit->setToolTip(unit->itemData(idx, Qt::ToolTipRole).toString());
 
     // Determine new unit ID
-    int newUnit = unit->itemData(idx, MegacoinUnits::UnitRole).toInt();
+    int newUnit = unit->itemData(idx, bullyonUnits::UnitRole).toInt();
 
     // Parse current value and convert to new unit
     bool valid = false;
@@ -142,10 +142,10 @@ void MegacoinAmountField::unitChanged(int idx)
     currentUnit = newUnit;
 
     // Set max length after retrieving the value, to prevent truncation
-    amount->setDecimals(MegacoinUnits::decimals(currentUnit));
-    amount->setMaximum(qPow(10, MegacoinUnits::amountDigits(currentUnit)) - qPow(10, -amount->decimals()));
+    amount->setDecimals(bullyonUnits::decimals(currentUnit));
+    amount->setMaximum(qPow(10, bullyonUnits::amountDigits(currentUnit)) - qPow(10, -amount->decimals()));
 
-    if(currentUnit == MegacoinUnits::uMEC)
+    if(currentUnit == bullyonUnits::uBUL)
         amount->setSingleStep(0.01);
     else
         amount->setSingleStep(0.001);
@@ -163,7 +163,7 @@ void MegacoinAmountField::unitChanged(int idx)
     setValid(true);
 }
 
-void MegacoinAmountField::setDisplayUnit(int newUnit)
+void bullyonAmountField::setDisplayUnit(int newUnit)
 {
     unit->setValue(newUnit);
 }

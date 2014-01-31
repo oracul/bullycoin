@@ -1,5 +1,5 @@
 /*
- * Qt4 megacoin GUI.
+ * Qt4 bullyon GUI.
  *
  * W.J. van der Laan 2011-2012
  * The Bitcoin Developers 2011-2013
@@ -12,7 +12,7 @@
 #include <QMap>
 #include <boost/shared_ptr.hpp>
 
-class MegacoinGUI;
+class bullyonGUI;
 class TransactionTableModel;
 class ClientModel;
 class WalletModel;
@@ -45,7 +45,7 @@ public:
     explicit WalletStack(QWidget *parent = 0);
     ~WalletStack();
 
-    void setMegacoinGUI(MegacoinGUI *gui) { this->gui = gui; }
+    void setbullyonGUI(bullyonGUI *gui) { this->gui = gui; }
 
     void setClientModel(ClientModel *clientModel) { this->clientModel = clientModel; }
 
@@ -59,7 +59,7 @@ public:
     void showOutOfSyncWarning(bool fShow);
 
 private:
-    MegacoinGUI *gui;
+    bullyonGUI *gui;
     ClientModel *clientModel;
     QMap<QString, WalletView*> mapWalletViews;
 

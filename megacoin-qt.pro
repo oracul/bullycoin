@@ -1,6 +1,6 @@
 TEMPLATE = app
-TARGET = megacoin-qt
-macx:TARGET = "Megacoin-Qt"
+TARGET = bullyon-qt
+macx:TARGET = "bullyon-Qt"
 VERSION = 0.8.99
 INCLUDEPATH += src src/json src/qt
 QT += core gui network
@@ -94,8 +94,8 @@ contains(USE_IPV6, -) {
     DEFINES += USE_IPV6=$$USE_IPV6
 }
 
-contains(MEGACOIN_NEED_QT_PLUGINS, 1) {
-    DEFINES += MEGACOIN_NEED_QT_PLUGINS
+contains(bullyon_NEED_QT_PLUGINS, 1) {
+    DEFINES += bullyon_NEED_QT_PLUGINS
     QTPLUGIN += qcncodecs qjpcodecs qtwcodecs qkrcodecs qtaccessiblewidgets
 }
 
@@ -133,7 +133,7 @@ QMAKE_CXXFLAGS_WARN_ON = -fdiagnostics-show-option -Wall -Wextra -Wformat -Wform
 
 # Input
 DEPENDPATH += src src/json src/qt
-HEADERS += src/qt/megacoingui.h \
+HEADERS += src/qt/bullyongui.h \
     src/qt/transactiontablemodel.h \
     src/qt/addresstablemodel.h \
     src/qt/optionsdialog.h \
@@ -142,7 +142,7 @@ HEADERS += src/qt/megacoingui.h \
     src/qt/signverifymessagedialog.h \
     src/qt/aboutdialog.h \
     src/qt/editaddressdialog.h \
-    src/qt/megacoinaddressvalidator.h \
+    src/qt/bullyonaddressvalidator.h \
     src/alert.h \
     src/addrman.h \
     src/base58.h \
@@ -182,7 +182,7 @@ HEADERS += src/qt/megacoingui.h \
     src/qt/monitoreddatamapper.h \
     src/qt/transactiondesc.h \
     src/qt/transactiondescdialog.h \
-    src/qt/megacoinamountfield.h \
+    src/qt/bullyonamountfield.h \
     src/wallet.h \
     src/keystore.h \
     src/qt/transactionfilterproxy.h \
@@ -191,13 +191,13 @@ HEADERS += src/qt/megacoingui.h \
     src/qt/walletview.h \
     src/qt/walletstack.h \
     src/qt/walletframe.h \
-    src/megacoinrpc.h \
+    src/bullyonrpc.h \
     src/qt/overviewpage.h \
     src/qt/csvmodelwriter.h \
     src/crypter.h \
     src/qt/sendcoinsentry.h \
     src/qt/qvalidatedlineedit.h \
-    src/qt/megacoinunits.h \
+    src/qt/bullyonunits.h \
     src/qt/qvaluecombobox.h \
     src/qt/askpassphrasedialog.h \
     src/protocol.h \
@@ -217,8 +217,8 @@ HEADERS += src/qt/megacoingui.h \
     src/qt/macnotificationhandler.h \
     src/qt/splashscreen.h
 
-SOURCES += src/qt/megacoin.cpp \
-    src/qt/megacoingui.cpp \
+SOURCES += src/qt/bullyon.cpp \
+    src/qt/bullyongui.cpp \
     src/qt/transactiontablemodel.cpp \
     src/qt/addresstablemodel.cpp \
     src/qt/optionsdialog.cpp \
@@ -227,7 +227,7 @@ SOURCES += src/qt/megacoin.cpp \
     src/qt/signverifymessagedialog.cpp \
     src/qt/aboutdialog.cpp \
     src/qt/editaddressdialog.cpp \
-    src/qt/megacoinaddressvalidator.cpp \
+    src/qt/bullyonaddressvalidator.cpp \
     src/alert.cpp \
     src/version.cpp \
     src/sync.cpp \
@@ -252,8 +252,8 @@ SOURCES += src/qt/megacoin.cpp \
     src/qt/monitoreddatamapper.cpp \
     src/qt/transactiondesc.cpp \
     src/qt/transactiondescdialog.cpp \
-    src/qt/megacoinstrings.cpp \
-    src/qt/megacoinamountfield.cpp \
+    src/qt/bullyonstrings.cpp \
+    src/qt/bullyonamountfield.cpp \
     src/wallet.cpp \
     src/keystore.cpp \
     src/qt/transactionfilterproxy.cpp \
@@ -262,7 +262,7 @@ SOURCES += src/qt/megacoin.cpp \
     src/qt/walletview.cpp \
     src/qt/walletstack.cpp \
     src/qt/walletframe.cpp \
-    src/megacoinrpc.cpp \
+    src/bullyonrpc.cpp \
     src/rpcdump.cpp \
     src/rpcnet.cpp \
     src/rpcmining.cpp \
@@ -274,7 +274,7 @@ SOURCES += src/qt/megacoin.cpp \
     src/crypter.cpp \
     src/qt/sendcoinsentry.cpp \
     src/qt/qvalidatedlineedit.cpp \
-    src/qt/megacoinunits.cpp \
+    src/qt/bullyonunits.cpp \
     src/qt/qvaluecombobox.cpp \
     src/qt/askpassphrasedialog.cpp \
     src/protocol.cpp \
@@ -287,7 +287,7 @@ SOURCES += src/qt/megacoin.cpp \
     src/txdb.cpp \
     src/qt/splashscreen.cpp
 
-RESOURCES += src/qt/megacoin.qrc
+RESOURCES += src/qt/bullyon.qrc
 
 FORMS += src/qt/forms/sendcoinsdialog.ui \
     src/qt/forms/addressbookpage.ui \
@@ -307,14 +307,14 @@ SOURCES += src/qt/qrcodedialog.cpp
 FORMS += src/qt/forms/qrcodedialog.ui
 }
 
-contains(MEGACOIN_QT_TEST, 1) {
+contains(bullyon_QT_TEST, 1) {
 SOURCES += src/qt/test/test_main.cpp \
     src/qt/test/uritests.cpp
 HEADERS += src/qt/test/uritests.h
 DEPENDPATH += src/qt/test
 QT += testlib
-TARGET = megacoin-qt_test
-DEFINES += MEGACOIN_QT_TEST
+TARGET = bullyon-qt_test
+DEFINES += bullyon_QT_TEST
   macx: CONFIG -= app_bundle
 }
 
@@ -322,8 +322,8 @@ DEFINES += MEGACOIN_QT_TEST
 CODECFORTR = UTF-8
 
 # for lrelease/lupdate
-# also add new translations to src/qt/megacoin.qrc under translations/
-TRANSLATIONS = $$files(src/qt/locale/megacoin_*.ts)
+# also add new translations to src/qt/bullyon.qrc under translations/
+TRANSLATIONS = $$files(src/qt/locale/bullyon_*.ts)
 
 isEmpty(QMAKE_LRELEASE) {
     win32:QMAKE_LRELEASE = $$[QT_INSTALL_BINS]\\lrelease.exe
@@ -380,7 +380,7 @@ isEmpty(BOOST_INCLUDE_PATH) {
 }
 
 win32:DEFINES += WIN32
-win32:RC_FILE = src/qt/res/megacoin-qt.rc
+win32:RC_FILE = src/qt/res/bullyon-qt.rc
 
 win32:!contains(MINGW_THREAD_BUGFIX, 0) {
     # At least qmake's win32-g++-cross profile is missing the -lmingwthrd
@@ -404,7 +404,7 @@ macx:HEADERS += src/qt/macdockiconhandler.h src/qt/macnotificationhandler.h
 macx:OBJECTIVE_SOURCES += src/qt/macdockiconhandler.mm src/qt/macnotificationhandler.mm
 macx:LIBS += -framework Foundation -framework ApplicationServices -framework AppKit
 macx:DEFINES += MAC_OSX MSG_NOSIGNAL=0
-macx:ICON = src/qt/res/icons/megacoin.icns
+macx:ICON = src/qt/res/icons/bullyon.icns
 macx:QMAKE_CFLAGS_THREAD += -pthread
 macx:QMAKE_LFLAGS_THREAD += -pthread
 macx:QMAKE_CXXFLAGS_THREAD += -pthread

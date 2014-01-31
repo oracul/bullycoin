@@ -2,12 +2,12 @@
 // Copyright (c) 2009-2012 The Bitcoin developers
 // Copyright (c) 2011-2012 Tenebrix, Litecoin developers
 // Copyright (c) 2013-2079 Dr. Kimoto Chan
-// Copyright (c) 2013-2079 The Megacoin developers
+// Copyright (c) 2013-2079 The bullyon developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
-#ifndef _MEGACOINRPC_H_
-#define _MEGACOINRPC_H_ 1
+#ifndef _bullyonRPC_H_
+#define _bullyonRPC_H_ 1
 
 #include <string>
 #include <list>
@@ -33,7 +33,7 @@ enum HTTPStatusCode
     HTTP_INTERNAL_SERVER_ERROR = 500,
 };
 
-// Megacoin RPC error codes
+// bullyon RPC error codes
 enum RPCErrorCode
 {
     // Standard JSON-RPC 2.0 errors
@@ -54,7 +54,7 @@ enum RPCErrorCode
     RPC_DESERIALIZATION_ERROR       = -22, // Error parsing or validating structure in raw format
 
     // P2P client errors
-    RPC_CLIENT_NOT_CONNECTED        = -9,  // Megacoin is not connected
+    RPC_CLIENT_NOT_CONNECTED        = -9,  // bullyon is not connected
     RPC_CLIENT_IN_INITIAL_DOWNLOAD  = -10, // Still downloading initial blocks
 
     // Wallet errors
@@ -110,7 +110,7 @@ public:
 };
 
 /**
- * Megacoin RPC command dispatcher.
+ * bullyon RPC command dispatcher.
  */
 class CRPCTable
 {

@@ -1,22 +1,22 @@
 Multiwallet Qt Development and Integration Strategy
 ===================================================
 
-In order to support loading of multiple wallets in megacoin-qt, a few changes in the UI architecture will be needed.
+In order to support loading of multiple wallets in bullyon-qt, a few changes in the UI architecture will be needed.
 Fortunately, only four of the files in the existing project are affected by this change.
 
 Three new classes have been implemented in three new .h/.cpp file pairs, with much of the functionality that was previously
-implemented in the MegacoinGUI class moved over to these new classes.
+implemented in the bullyonGUI class moved over to these new classes.
 
-The two existing files most affected, by far, are megacoingui.h and megacoingui.cpp, as the MegacoinGUI class will require
+The two existing files most affected, by far, are bullyongui.h and bullyongui.cpp, as the bullyonGUI class will require
 some major retrofitting.
 
-Only requiring some minor changes is megacoin.cpp.
+Only requiring some minor changes is bullyon.cpp.
 
-Finally, three new headers and source files will have to be added to megacoin-qt.pro.
+Finally, three new headers and source files will have to be added to bullyon-qt.pro.
 
-Changes to class MegacoinGUI
+Changes to class bullyonGUI
 ---------------------------
-The principal change to the MegacoinGUI class concerns the QStackedWidget instance called centralWidget.
+The principal change to the bullyonGUI class concerns the QStackedWidget instance called centralWidget.
 This widget owns five page views: overviewPage, transactionsPage, addressBookPage, receiveCoinsPage, and sendCoinsPage.
 
 A new class called *WalletView* inheriting from QStackedWidget has been written to handle all renderings and updates of
@@ -28,17 +28,17 @@ different loaded wallets. In its current implementation, as a QStackedWidget, on
 but this can be changed later.
 
 A third class called *WalletFrame* inheriting from QFrame has been written as a container for embedding all wallet-related
-controls into MegacoinGUI. At present it just contains a WalletStack instance and does little more than passing on messages
-from MegacoinGUI to the WalletStack, which in turn passes them to the individual WalletViews. It is a WalletFrame instance
-that takes the place of what used to be centralWidget in MegacoinGUI. The purpose of this class is to allow future
-refinements of the wallet controls with minimal need for further modifications to MegacoinGUI, thus greatly simplifying
+controls into bullyonGUI. At present it just contains a WalletStack instance and does little more than passing on messages
+from bullyonGUI to the WalletStack, which in turn passes them to the individual WalletViews. It is a WalletFrame instance
+that takes the place of what used to be centralWidget in bullyonGUI. The purpose of this class is to allow future
+refinements of the wallet controls with minimal need for further modifications to bullyonGUI, thus greatly simplifying
 merges while reducing the risk of breaking top-level stuff.
 
-Changes to megacoin.cpp
+Changes to bullyon.cpp
 ----------------------
-megacoin.cpp is the entry point into megacoin-qt, and as such, will require some minor modifications to provide hooks for
+bullyon.cpp is the entry point into bullyon-qt, and as such, will require some minor modifications to provide hooks for
 multiple wallet support. Most importantly will be the way it instantiates WalletModels and passes them to the
-singleton MegacoinGUI instance called window. Formerly, MegacoinGUI kept a pointer to a single instance of a WalletModel.
+singleton bullyonGUI instance called window. Formerly, bullyonGUI kept a pointer to a single instance of a WalletModel.
 The initial change required is very simple: rather than calling `window.setWalletModel(&walletModel);` we perform the
 following two steps:
 

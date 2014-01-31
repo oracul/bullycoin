@@ -1,6 +1,6 @@
 // Copyright (c) 2009-2012 The Bitcoin developers
 // Copyright (c) 2013-2079 Dr. Kimoto Chan
-// Copyright (c) 2013-2079 The Megacoin developers
+// Copyright (c) 2013-2079 The bullyon developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -26,8 +26,8 @@
 
 using namespace boost;
 
-const int MEGACOIN_IPC_CONNECT_TIMEOUT = 1000; // milliseconds
-const QString MEGACOIN_IPC_PREFIX("megacoin:");
+const int bullyon_IPC_CONNECT_TIMEOUT = 1000; // milliseconds
+const QString bullyon_IPC_PREFIX("bullyon:");
 
 //
 // Create a name that is unique for:
@@ -36,7 +36,7 @@ const QString MEGACOIN_IPC_PREFIX("megacoin:");
 //
 static QString ipcServerName()
 {
-    QString name("MegacoinQt");
+    QString name("bullyonQt");
 
     // Append a simple hash of the datadir
     // Note that GetDataDir(true) returns a different path
@@ -67,7 +67,7 @@ bool PaymentServer::ipcSendCommandLine()
     const QStringList& args = qApp->arguments();
     for (int i = 1; i < args.size(); i++)
     {
-        if (!args[i].startsWith(MEGACOIN_IPC_PREFIX, Qt::CaseInsensitive))
+        if (!args[i].startsWith(bullyon_IPC_PREFIX, Qt::CaseInsensitive))
             continue;
         savedPaymentRequests.append(args[i]);
     }
@@ -76,7 +76,7 @@ bool PaymentServer::ipcSendCommandLine()
     {
         QLocalSocket* socket = new QLocalSocket();
         socket->connectToServer(ipcServerName(), QIODevice::WriteOnly);
-        if (!socket->waitForConnected(MEGACOIN_IPC_CONNECT_TIMEOUT))
+        if (!socket->waitForConnected(bullyon_IPC_CONNECT_TIMEOUT))
             return false;
 
         QByteArray block;
@@ -87,7 +87,7 @@ bool PaymentServer::ipcSendCommandLine()
         socket->write(block);
         socket->flush();
 
-        socket->waitForBytesWritten(MEGACOIN_IPC_CONNECT_TIMEOUT);
+        socket->waitForBytesWritten(bullyon_IPC_CONNECT_TIMEOUT);
         socket->disconnectFromServer();
         delete socket;
         fResult = true;
@@ -97,7 +97,7 @@ bool PaymentServer::ipcSendCommandLine()
 
 PaymentServer::PaymentServer(QApplication* parent) : QObject(parent), saveURIs(true)
 {
-    // Install global event filter to catch QFileOpenEvents on the mac (sent when you click megacoin: links)
+    // Install global event filter to catch QFileOpenEvents on the mac (sent when you click bullyon: links)
     parent->installEventFilter(this);
 
     QString name = ipcServerName();
@@ -108,14 +108,14 @@ PaymentServer::PaymentServer(QApplication* parent) : QObject(parent), saveURIs(t
     uriServer = new QLocalServer(this);
 
     if (!uriServer->listen(name))
-        qDebug() << tr("Cannot start megacoin: click-to-pay handler");
+        qDebug() << tr("Cannot start bullyon: click-to-pay handler");
     else
         connect(uriServer, SIGNAL(newConnection()), this, SLOT(handleURIConnection()));
 }
 
 bool PaymentServer::eventFilter(QObject *object, QEvent *event)
 {
-    // clicking on megacoin: URLs creates FileOpen events on the Mac:
+    // clicking on bullyon: URLs creates FileOpen events on the Mac:
     if (event->type() == QEvent::FileOpen)
     {
         QFileOpenEvent* fileEvent = static_cast<QFileOpenEvent*>(event);

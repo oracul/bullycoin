@@ -140,7 +140,7 @@
          </widget>
         </item>
         <item row="0" column="1">
-         <widget class="MegacoinAmountField" name="lnReqAmount">
+         <widget class="bullyonAmountField" name="lnReqAmount">
           <property name="enabled">
            <bool>false</bool>
           </property>
@@ -185,9 +185,9 @@
  </widget>
  <customwidgets>
   <customwidget>
-   <class>MegacoinAmountField</class>
+   <class>bullyonAmountField</class>
    <extends>QSpinBox</extends>
-   <header>megacoinamountfield.h</header>
+   <header>bullyonamountfield.h</header>
   </customwidget>
  </customwidgets>
  <resources/>

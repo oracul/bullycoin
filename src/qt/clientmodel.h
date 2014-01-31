@@ -20,7 +20,7 @@ enum BlockSource {
     BLOCK_SOURCE_NETWORK
 };
 
-/** Model for Megacoin network client. */
+/** Model for bullyon network client. */
 class ClientModel : public QObject
 {
     Q_OBJECT

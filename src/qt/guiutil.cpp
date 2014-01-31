@@ -2,9 +2,9 @@
 
 #include "guiutil.h"
 
-#include "megacoinaddressvalidator.h"
+#include "bullyonaddressvalidator.h"
 #include "walletmodel.h"
-#include "megacoinunits.h"
+#include "bullyonunits.h"
 
 #include "util.h"
 #include "init.h"
@@ -58,7 +58,7 @@ QString dateTimeStr(qint64 nTime)
     return dateTimeStr(QDateTime::fromTime_t((qint32)nTime));
 }
 
-QFont megacoinAddressFont()
+QFont bullyonAddressFont()
 {
     QFont font("Monospace");
     font.setStyleHint(QFont::TypeWriter);
@@ -67,9 +67,9 @@ QFont megacoinAddressFont()
 
 void setupAddressWidget(QLineEdit *widget, QWidget *parent)
 {
-    widget->setMaxLength(MegacoinAddressValidator::MaxAddressLength);
-    widget->setValidator(new MegacoinAddressValidator(parent));
-    widget->setFont(megacoinAddressFont());
+    widget->setMaxLength(bullyonAddressValidator::MaxAddressLength);
+    widget->setValidator(new bullyonAddressValidator(parent));
+    widget->setFont(bullyonAddressFont());
 }
 
 void setupAmountWidget(QLineEdit *widget, QWidget *parent)
@@ -81,10 +81,10 @@ void setupAmountWidget(QLineEdit *widget, QWidget *parent)
     widget->setAlignment(Qt::AlignRight|Qt::AlignVCenter);
 }
 
-bool parseMegacoinURI(const QUrl &uri, SendCoinsRecipient *out)
+bool parsebullyonURI(const QUrl &uri, SendCoinsRecipient *out)
 {
-    // return if URI is not valid or is no megacoin URI
-    if(!uri.isValid() || uri.scheme() != QString("megacoin"))
+    // return if URI is not valid or is no bullyon URI
+    if(!uri.isValid() || uri.scheme() != QString("bullyon"))
         return false;
 
     SendCoinsRecipient rv;
@@ -115,7 +115,7 @@ bool parseMegacoinURI(const QUrl &uri, SendCoinsRecipient *out)
         {
             if(!i->second.isEmpty())
             {
-                if(!MegacoinUnits::parse(MegacoinUnits::MEC, i->second, &rv.amount))
+                if(!bullyonUnits::parse(bullyonUnits::BUL, i->second, &rv.amount))
                 {
                     return false;
                 }
@@ -133,18 +133,18 @@ bool parseMegacoinURI(const QUrl &uri, SendCoinsRecipient *out)
     return true;
 }
 
-bool parseMegacoinURI(QString uri, SendCoinsRecipient *out)
+bool parsebullyonURI(QString uri, SendCoinsRecipient *out)
 {
-    // Convert megacoin:// to megacoin:
+    // Convert bullyon:// to bullyon:
     //
-    //    Cannot handle this later, because megacoin:// will cause Qt to see the part after // as host,
+    //    Cannot handle this later, because bullyon:// will cause Qt to see the part after // as host,
     //    which will lower-case it (and thus invalidate the address).
-    if(uri.startsWith("megacoin://"))
+    if(uri.startsWith("bullyon://"))
     {
-        uri.replace(0, 10, "megacoin:");
+        uri.replace(0, 10, "bullyon:");
     }
     QUrl uriInstance(uri);
-    return parseMegacoinURI(uriInstance, out);
+    return parsebullyonURI(uriInstance, out);
 }
 
 QString HtmlEscape(const QString& str, bool fMultiLine)
@@ -295,12 +295,12 @@ bool ToolTipToRichTextFilter::eventFilter(QObject *obj, QEvent *evt)
 #ifdef WIN32
 boost::filesystem::path static StartupShortcutPath()
 {
-    return GetSpecialFolderPath(CSIDL_STARTUP) / "Megacoin.lnk";
+    return GetSpecialFolderPath(CSIDL_STARTUP) / "bullyon.lnk";
 }
 
 bool GetStartOnSystemStartup()
 {
-    // check for Megacoin.lnk
+    // check for bullyon.lnk
     return boost::filesystem::exists(StartupShortcutPath());
 }
 
@@ -377,7 +377,7 @@ boost::filesystem::path static GetAutostartDir()
 
 boost::filesystem::path static GetAutostartFilePath()
 {
-    return GetAutostartDir() / "megacoin.desktop";
+    return GetAutostartDir() / "bullyon.desktop";
 }
 
 bool GetStartOnSystemStartup()
@@ -415,10 +415,10 @@ bool SetStartOnSystemStartup(bool fAutoStart)
         boost::filesystem::ofstream optionFile(GetAutostartFilePath(), std::ios_base::out|std::ios_base::trunc);
         if (!optionFile.good())
             return false;
-        // Write a megacoin.desktop file to the autostart directory:
+        // Write a bullyon.desktop file to the autostart directory:
         optionFile << "[Desktop Entry]\n";
         optionFile << "Type=Application\n";
-        optionFile << "Name=Megacoin\n";
+        optionFile << "Name=bullyon\n";
         optionFile << "Exec=" << pszExePath << " -min\n";
         optionFile << "Terminal=false\n";
         optionFile << "Hidden=false\n";
@@ -439,10 +439,10 @@ bool SetStartOnSystemStartup(bool fAutoStart) { return false; }
 HelpMessageBox::HelpMessageBox(QWidget *parent) :
     QMessageBox(parent)
 {
-    header = tr("Megacoin-Qt") + " " + tr("version") + " " +
+    header = tr("bullyon-Qt") + " " + tr("version") + " " +
         QString::fromStdString(FormatFullVersion()) + "\n\n" +
         tr("Usage:") + "\n" +
-        "  megacoin-qt [" + tr("command-line options") + "]                     " + "\n";
+        "  bullyon-qt [" + tr("command-line options") + "]                     " + "\n";
 
     coreOptions = QString::fromStdString(HelpMessage());
 
@@ -451,7 +451,7 @@ HelpMessageBox::HelpMessageBox(QWidget *parent) :
         "  -min                   " + tr("Start minimized") + "\n" +
         "  -splash                " + tr("Show splash screen on startup (default: 1)") + "\n";
 
-    setWindowTitle(tr("Megacoin-Qt"));
+    setWindowTitle(tr("bullyon-Qt"));
     setTextFormat(Qt::PlainText);
     // setMinimumWidth is ignored for QMessageBox so put in non-breaking spaces to make it wider.
     setText(header + QString(QChar(0x2003)).repeated(50));

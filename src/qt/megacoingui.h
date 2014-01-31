@@ -1,5 +1,5 @@
-#ifndef MEGACOINGUI_H
-#define MEGACOINGUI_H
+#ifndef bullyonGUI_H
+#define bullyonGUI_H
 
 #include <QMainWindow>
 #include <QSystemTrayIcon>
@@ -33,25 +33,25 @@ class QAction;
 QT_END_NAMESPACE
 
 /**
-  Megacoin GUI main class. This class represents the main window of the Megacoin UI. It communicates with both the client and
+  bullyon GUI main class. This class represents the main window of the bullyon UI. It communicates with both the client and
   wallet models to give the user an up-to-date view of the current core state.
 */
-class MegacoinGUI : public QMainWindow
+class bullyonGUI : public QMainWindow
 {
     Q_OBJECT
 
 public:
     static const QString DEFAULT_WALLET;
 
-    explicit MegacoinGUI(bool fIsTestnet = false, QWidget *parent = 0);
-    ~MegacoinGUI();
+    explicit bullyonGUI(bool fIsTestnet = false, QWidget *parent = 0);
+    ~bullyonGUI();
 
     /** Set the client model.
         The client model represents the part of the core that communicates with the P2P network, and is wallet-agnostic.
     */
     void setClientModel(ClientModel *clientModel);
     /** Set the wallet model.
-        The wallet model represents a megacoin wallet, and offers access to the list of transactions, address book and sending
+        The wallet model represents a bullyon wallet, and offers access to the list of transactions, address book and sending
         functionality.
     */
 
@@ -195,4 +195,4 @@ private slots:
     void detectShutdown();
 };
 
-#endif // MEGACOINGUI_H
+#endif // bullyonGUI_H

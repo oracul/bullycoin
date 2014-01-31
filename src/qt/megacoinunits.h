@@ -1,27 +1,27 @@
-#ifndef MEGACOINUNITS_H
-#define MEGACOINUNITS_H
+#ifndef bullyonUNITS_H
+#define bullyonUNITS_H
 
 #include <QString>
 #include <QAbstractListModel>
 
-/** Megacoin unit definitions. Encapsulates parsing and formatting
+/** bullyon unit definitions. Encapsulates parsing and formatting
    and serves as list model for drop-down selection boxes.
 */
-class MegacoinUnits: public QAbstractListModel
+class bullyonUnits: public QAbstractListModel
 {
     Q_OBJECT
 
 public:
-    explicit MegacoinUnits(QObject *parent);
+    explicit bullyonUnits(QObject *parent);
 
-    /** Megacoin units.
+    /** bullyon units.
       @note Please add only sensible ones
      */
     enum Unit
     {
-        MEC,
-        mMEC,
-        uMEC
+        BUL,
+        mBUL,
+        uBUL
     };
 
     //! @name Static API
@@ -62,8 +62,8 @@ public:
     ///@}
 
 private:
-    QList<MegacoinUnits::Unit> unitlist;
+    QList<bullyonUnits::Unit> unitlist;
 };
-typedef MegacoinUnits::Unit MegacoinUnit;
+typedef bullyonUnits::Unit bullyonUnit;
 
-#endif // MEGACOINUNITS_H
+#endif // bullyonUNITS_H

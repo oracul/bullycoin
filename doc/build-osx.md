@@ -1,4 +1,4 @@
-Mac OS X megacoind build instructions
+Mac OS X bullyond build instructions
 ====================================
 
 Authors
@@ -14,7 +14,7 @@ License
 
 Copyright (c) 2009-2012 Bitcoin Developers
 Copyright (c) 2013-2079 Dr. Kimoto Chan
-Copyright (c) 2013-2079 The Megacoin developers
+Copyright (c) 2013-2079 The bullyon developers
 
 Distributed under the MIT/X11 software license, see the accompanying
 file COPYING or http://www.opensource.org/licenses/mit-license.php.
@@ -28,7 +28,7 @@ Eric Young (eay@cryptsoft.com) and UPnP software written by Thomas Bernard.
 Notes
 -----
 
-See `doc/readme-qt.rst` for instructions on building Megacoin-Qt, the
+See `doc/readme-qt.rst` for instructions on building bullyon-Qt, the
 graphical user interface.
 
 Tested on OS X 10.5 through 10.8 on Intel processors only. PPC is not
@@ -74,14 +74,14 @@ Installing the dependencies using MacPorts is very straightforward.
 
     sudo port install boost db48@+no_java openssl miniupnpc
 
-### Building `megacoind`
+### Building `bullyond`
 
 1. Clone the github tree to get the source code and go into the directory.
 
-        git clone git@github.com:megacoin/megacoin.git megacoin
-        cd megacoin
+        git clone git@github.com:bullyon/bullyon.git bullyon
+        cd bullyon
 
-2.  Build megacoind:
+2.  Build bullyond:
 
         cd src
         make -f makefile.osx
@@ -109,12 +109,12 @@ If not, you can ensure that the Brew OpenSSL is correctly linked by running
 
 Rerunning "openssl version" should now return the correct version.
 
-### Building `megacoind`
+### Building `bullyond`
 
 1. Clone the github tree to get the source code and go into the directory.
 
-        git clone git@github.com:megacoin/megacoin.git megacoin
-        cd megacoin
+        git clone git@github.com:bullyon/bullyon.git bullyon
+        cd bullyon
 
 2.  Modify source in order to pick up the `openssl` library.
 
@@ -124,7 +124,7 @@ Rerunning "openssl version" should now return the correct version.
 
         patch -p1 < contrib/homebrew/makefile.osx.patch
 
-3.  Build megacoind:
+3.  Build bullyond:
 
         cd src
         make -f makefile.osx
@@ -136,10 +136,10 @@ Rerunning "openssl version" should now return the correct version.
 Creating a release build
 ------------------------
 
-A megacoind binary is not included in the Megacoin-Qt.app bundle. You can ignore
-this section if you are building `megacoind` for your own use.
+A bullyond binary is not included in the bullyon-Qt.app bundle. You can ignore
+this section if you are building `bullyond` for your own use.
 
-If you are building `megacoind` for others, your build machine should be set up
+If you are building `bullyond` for others, your build machine should be set up
 as follows for maximum compatibility:
 
 All dependencies should be compiled with these flags:
@@ -158,30 +158,30 @@ As of December 2012, the `boost` port does not obey `macosx_deployment_target`.
 Download `http://gavinandresen-bitcoin.s3.amazonaws.com/boost_macports_fix.zip`
 for a fix. Some ports also seem to obey either `build_arch` or
 `macosx_deployment_target`, but not both at the same time. For example, building
-on an OS X 10.6 64-bit machine fails. Official release builds of Megacoin-Qt are
+on an OS X 10.6 64-bit machine fails. Official release builds of bullyon-Qt are
 compiled on an OS X 10.6 32-bit machine to workaround that problem.
 
-Once dependencies are compiled, creating `Megacoin-Qt.app` is easy:
+Once dependencies are compiled, creating `bullyon-Qt.app` is easy:
 
     make -f Makefile.osx RELEASE=1
 
 Running
 -------
 
-It's now available at `./megacoind`, provided that you are still in the `src`
+It's now available at `./bullyond`, provided that you are still in the `src`
 directory. We have to first create the RPC configuration file, though.
 
-Run `./megacoind` to get the filename where it should be put, or just try these
+Run `./bullyond` to get the filename where it should be put, or just try these
 commands:
 
-    echo -e "rpcuser=megacoinrpc\nrpcpassword=$(xxd -l 16 -p /dev/urandom)" > "/Users/${USER}/Library/Application Support/Megacoin/megacoin.conf"
-    chmod 600 "/Users/${USER}/Library/Application Support/Megacoin/megacoin.conf"
+    echo -e "rpcuser=bullyonrpc\nrpcpassword=$(xxd -l 16 -p /dev/urandom)" > "/Users/${USER}/Library/Application Support/bullyon/bullyon.conf"
+    chmod 600 "/Users/${USER}/Library/Application Support/bullyon/bullyon.conf"
 
 When next you run it, it will start downloading the blockchain, but it won't
 output anything while it's doing this. This process may take several hours.
 
 Other commands:
 
-    ./megacoind --help  # for a list of command-line options.
-    ./megacoind -daemon # to start the megacoin daemon.
-    ./megacoind help    # When the daemon is running, to get a list of RPC commands
+    ./bullyond --help  # for a list of command-line options.
+    ./bullyond -daemon # to start the bullyon daemon.
+    ./bullyond help    # When the daemon is running, to get a list of RPC commands

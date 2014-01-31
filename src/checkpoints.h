@@ -1,10 +1,10 @@
 // Copyright (c) 2009-2012 The Bitcoin developers
 // Copyright (c) 2013-2079 Dr. Kimoto Chan
-// Copyright (c) 2013-2079 The Megacoin developers
+// Copyright (c) 2013-2079 The bullyon developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
-#ifndef MEGACOIN_CHECKPOINT_H
-#define MEGACOIN_CHECKPOINT_H
+#ifndef bullyon_CHECKPOINT_H
+#define bullyon_CHECKPOINT_H
 
 #include <map>
 

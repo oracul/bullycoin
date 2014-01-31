@@ -2,8 +2,8 @@
 // Copyright (c) 2009-2012 The Bitcoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
-#ifndef MEGACOIN_TXDB_LEVELDB_H
-#define MEGACOIN_TXDB_LEVELDB_H
+#ifndef bullyon_TXDB_LEVELDB_H
+#define bullyon_TXDB_LEVELDB_H
 
 #include "main.h"
 #include "leveldb.h"
@@ -50,4 +50,4 @@ public:
     bool LoadBlockIndexGuts();
 };
 
-#endif // MEGACOIN_TXDB_LEVELDB_H
+#endif // bullyon_TXDB_LEVELDB_H

@@ -2,8 +2,8 @@
 // Copyright (c) 2009-2012 The Bitcoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
-#ifndef MEGACOIN_INIT_H
-#define MEGACOIN_INIT_H
+#ifndef bullyon_INIT_H
+#define bullyon_INIT_H
 
 #include "wallet.h"
 

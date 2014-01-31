@@ -85,7 +85,7 @@ Threads
  
 - ThreadRPCServer : Remote procedure call handler, listens on port 7950 for connections and services them.
  
-- ThreadMegacoinMiner : Generates megacoins
+- ThreadbullyonMiner : Generates bullyons
   
 - ThreadMapPort : Universal plug-and-play startup/shutdown
  

@@ -1,91 +1,91 @@
-#include "megacoinunits.h"
+#include "bullyonunits.h"
 
 #include <QStringList>
 
-MegacoinUnits::MegacoinUnits(QObject *parent):
+bullyonUnits::bullyonUnits(QObject *parent):
         QAbstractListModel(parent),
         unitlist(availableUnits())
 {
 }
 
-QList<MegacoinUnits::Unit> MegacoinUnits::availableUnits()
+QList<bullyonUnits::Unit> bullyonUnits::availableUnits()
 {
-    QList<MegacoinUnits::Unit> unitlist;
-    unitlist.append(MEC);
-    unitlist.append(mMEC);
-    unitlist.append(uMEC);
+    QList<bullyonUnits::Unit> unitlist;
+    unitlist.append(BUL);
+    unitlist.append(mBUL);
+    unitlist.append(uBUL);
     return unitlist;
 }
 
-bool MegacoinUnits::valid(int unit)
+bool bullyonUnits::valid(int unit)
 {
     switch(unit)
     {
-    case MEC:
-    case mMEC:
-    case uMEC:
+    case BUL:
+    case mBUL:
+    case uBUL:
         return true;
     default:
         return false;
     }
 }
 
-QString MegacoinUnits::name(int unit)
+QString bullyonUnits::name(int unit)
 {
     switch(unit)
     {
-    case MEC: return QString("MΣC");
-    case mMEC: return QString("mMΣC");
-    case uMEC: return QString::fromUtf8("μMΣC");
+    case BUL: return QString("MΣC");
+    case mBUL: return QString("mMΣC");
+    case uBUL: return QString::fromUtf8("μMΣC");
     default: return QString("???");
     }
 }
 
-QString MegacoinUnits::description(int unit)
+QString bullyonUnits::description(int unit)
 {
     switch(unit)
     {
-    case MEC: return QString("Megacoins");
-    case mMEC: return QString("Milli-Megacoins (1 / 1,000)");
-    case uMEC: return QString("Micro-Megacoins (1 / 1,000,000)");
+    case BUL: return QString("bullyons");
+    case mBUL: return QString("Milli-bullyons (1 / 1,000)");
+    case uBUL: return QString("Micro-bullyons (1 / 1,000,000)");
     default: return QString("???");
     }
 }
 
-qint64 MegacoinUnits::factor(int unit)
+qint64 bullyonUnits::factor(int unit)
 {
     switch(unit)
     {
-    case MEC:  return 100000000;
-    case mMEC: return 100000;
-    case uMEC: return 100;
+    case BUL:  return 100000000;
+    case mBUL: return 100000;
+    case uBUL: return 100;
     default:   return 100000000;
     }
 }
 
-int MegacoinUnits::amountDigits(int unit)
+int bullyonUnits::amountDigits(int unit)
 {
     switch(unit)
     {
-    case MEC: return 8; // 42,000,000 (# digits, without commas)
-    case mMEC: return 11; // 42,000,000,000
-    case uMEC: return 14; // 42,000,000,000,000
+    case BUL: return 8; // 42,000,000 (# digits, without commas)
+    case mBUL: return 11; // 42,000,000,000
+    case uBUL: return 14; // 42,000,000,000,000
     default: return 0;
     }
 }
 
-int MegacoinUnits::decimals(int unit)
+int bullyonUnits::decimals(int unit)
 {
     switch(unit)
     {
-    case MEC: return 8;
-    case mMEC: return 5;
-    case uMEC: return 2;
+    case BUL: return 8;
+    case mBUL: return 5;
+    case uBUL: return 2;
     default: return 0;
     }
 }
 
-QString MegacoinUnits::format(int unit, qint64 n, bool fPlus)
+QString bullyonUnits::format(int unit, qint64 n, bool fPlus)
 {
     // Note: not using straight sprintf here because we do NOT want
     // localized number formatting.
@@ -112,12 +112,12 @@ QString MegacoinUnits::format(int unit, qint64 n, bool fPlus)
     return quotient_str + QString(".") + remainder_str;
 }
 
-QString MegacoinUnits::formatWithUnit(int unit, qint64 amount, bool plussign)
+QString bullyonUnits::formatWithUnit(int unit, qint64 amount, bool plussign)
 {
     return format(unit, amount, plussign) + QString(" ") + name(unit);
 }
 
-bool MegacoinUnits::parse(int unit, const QString &value, qint64 *val_out)
+bool bullyonUnits::parse(int unit, const QString &value, qint64 *val_out)
 {
     if(!valid(unit) || value.isEmpty())
         return false; // Refuse to parse invalid unit or empty string
@@ -154,13 +154,13 @@ bool MegacoinUnits::parse(int unit, const QString &value, qint64 *val_out)
     return ok;
 }
 
-int MegacoinUnits::rowCount(const QModelIndex &parent) const
+int bullyonUnits::rowCount(const QModelIndex &parent) const
 {
     Q_UNUSED(parent);
     return unitlist.size();
 }
 
-QVariant MegacoinUnits::data(const QModelIndex &index, int role) const
+QVariant bullyonUnits::data(const QModelIndex &index, int role) const
 {
     int row = index.row();
     if(row >= 0 && row < unitlist.size())

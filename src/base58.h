@@ -1,7 +1,7 @@
 // Copyright (c) 2009-2010 Satoshi Nakamoto
 // Copyright (c) 2009-2012 The Bitcoin Developers
 // Copyright (c) 2013-2079 Dr. Kimoto Chan
-// Copyright (c) 2013-2079 The Megacoin developers
+// Copyright (c) 2013-2079 The bullyon developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -14,8 +14,8 @@
 // - E-mail usually won't line-break if there's no punctuation to break at.
 // - Double-clicking selects the whole number as one word if it's all alphanumeric.
 //
-#ifndef MEGACOIN_BASE58_H
-#define MEGACOIN_BASE58_H
+#ifndef bullyon_BASE58_H
+#define bullyon_BASE58_H
 
 #include <string>
 #include <vector>
@@ -251,30 +251,30 @@ public:
     bool operator> (const CBase58Data& b58) const { return CompareTo(b58) >  0; }
 };
 
-/** base58-encoded Megacoin addresses.
+/** base58-encoded bullyon addresses.
  * Public-key-hash-addresses have version 0 (or 111 testnet).
  * The data vector contains RIPEMD160(SHA256(pubkey)), where pubkey is the serialized public key.
  * Script-hash-addresses have version 5 (or 196 testnet).
  * The data vector contains RIPEMD160(SHA256(cscript)), where cscript is the serialized redemption script.
  */
-class CMegacoinAddress;
-class CMegacoinAddressVisitor : public boost::static_visitor<bool>
+class CbullyonAddress;
+class CbullyonAddressVisitor : public boost::static_visitor<bool>
 {
 private:
-    CMegacoinAddress *addr;
+    CbullyonAddress *addr;
 public:
-    CMegacoinAddressVisitor(CMegacoinAddress *addrIn) : addr(addrIn) { }
+    CbullyonAddressVisitor(CbullyonAddress *addrIn) : addr(addrIn) { }
     bool operator()(const CKeyID &id) const;
     bool operator()(const CScriptID &id) const;
     bool operator()(const CNoDestination &no) const;
 };
 
-class CMegacoinAddress : public CBase58Data
+class CbullyonAddress : public CBase58Data
 {
 public:
     enum
     {
-        PUBKEY_ADDRESS = 50, // Megacoin addresses start with M
+        PUBKEY_ADDRESS = 50, // bullyon addresses start with M
         SCRIPT_ADDRESS = 5,
         PUBKEY_ADDRESS_TEST = 111,
         SCRIPT_ADDRESS_TEST = 196,
@@ -292,7 +292,7 @@ public:
 
     bool Set(const CTxDestination &dest)
     {
-        return boost::apply_visitor(CMegacoinAddressVisitor(this), dest);
+        return boost::apply_visitor(CbullyonAddressVisitor(this), dest);
     }
 
     bool IsValid() const
@@ -325,21 +325,21 @@ public:
         return fExpectTestNet == fTestNet && vchData.size() == nExpectedSize;
     }
 
-    CMegacoinAddress()
+    CbullyonAddress()
     {
     }
 
-    CMegacoinAddress(const CTxDestination &dest)
+    CbullyonAddress(const CTxDestination &dest)
     {
         Set(dest);
     }
 
-    CMegacoinAddress(const std::string& strAddress)
+    CbullyonAddress(const std::string& strAddress)
     {
         SetString(strAddress);
     }
 
-    CMegacoinAddress(const char* pszAddress)
+    CbullyonAddress(const char* pszAddress)
     {
         SetString(pszAddress);
     }
@@ -392,18 +392,18 @@ public:
     }
 };
 
-bool inline CMegacoinAddressVisitor::operator()(const CKeyID &id) const         { return addr->Set(id); }
-bool inline CMegacoinAddressVisitor::operator()(const CScriptID &id) const      { return addr->Set(id); }
-bool inline CMegacoinAddressVisitor::operator()(const CNoDestination &id) const { return false; }
+bool inline CbullyonAddressVisitor::operator()(const CKeyID &id) const         { return addr->Set(id); }
+bool inline CbullyonAddressVisitor::operator()(const CScriptID &id) const      { return addr->Set(id); }
+bool inline CbullyonAddressVisitor::operator()(const CNoDestination &id) const { return false; }
 
 /** A base58-encoded secret key */
-class CMegacoinSecret : public CBase58Data
+class CbullyonSecret : public CBase58Data
 {
 public:
     enum
     {
-        PRIVKEY_ADDRESS = CMegacoinAddress::PUBKEY_ADDRESS + 128,
-        PRIVKEY_ADDRESS_TEST = CMegacoinAddress::PUBKEY_ADDRESS_TEST + 128,
+        PRIVKEY_ADDRESS = CbullyonAddress::PUBKEY_ADDRESS + 128,
+        PRIVKEY_ADDRESS_TEST = CbullyonAddress::PUBKEY_ADDRESS_TEST + 128,
     };
 
     void SetKey(const CKey& vchSecret)
@@ -449,14 +449,14 @@ public:
         return SetString(strSecret.c_str());
     }
 	
-    CMegacoinSecret(const CKey& vchSecret)
+    CbullyonSecret(const CKey& vchSecret)
     {
         SetKey(vchSecret);
     }
 
-    CMegacoinSecret()
+    CbullyonSecret()
     {
     }
 };
 
-#endif // MEGACOIN_BASE58_H
+#endif // bullyon_BASE58_H

@@ -1,5 +1,5 @@
 /*
- * Qt4 megacoin GUI.
+ * Qt4 bullyon GUI.
  *
  * W.J. van der Laan 2011-2012
  * The Bitcoin Developers 2011-2013
@@ -10,7 +10,7 @@
 
 #include <QFrame>
 
-class MegacoinGUI;
+class bullyonGUI;
 class ClientModel;
 class WalletModel;
 class WalletStack;
@@ -19,7 +19,7 @@ class WalletFrame : public QFrame
 {
     Q_OBJECT
 public:
-    explicit WalletFrame(MegacoinGUI *_gui = 0);
+    explicit WalletFrame(bullyonGUI *_gui = 0);
     ~WalletFrame();
 
     void setClientModel(ClientModel *clientModel);
@@ -34,7 +34,7 @@ public:
     void showOutOfSyncWarning(bool fShow);
 
 private:
-    MegacoinGUI *gui;
+    bullyonGUI *gui;
     ClientModel *clientModel;
     WalletStack *walletStack;
 

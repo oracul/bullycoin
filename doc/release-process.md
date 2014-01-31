@@ -2,14 +2,14 @@ Release Process
 ====================
 
 * update translations (ping wumpus, Diapolo or tcatm on IRC)
-* see https://github.com/megacoin/megacoin/blob/master/doc/translation_process.md#syncing-with-transifex
+* see https://github.com/bullyon/bullyon/blob/master/doc/translation_process.md#syncing-with-transifex
 
 * * *
 
 ###update (commit) version in sources
 
 
-	megacoin-qt.pro
+	bullyon-qt.pro
 	contrib/verifysfbinaries/verify.sh
 	doc/README*
 	share/setup.nsi
@@ -27,7 +27,7 @@ Release Process
 
 ##perform gitian builds
 
- From a directory containing the megacoin source, gitian-builder and gitian.sigs
+ From a directory containing the bullyon source, gitian-builder and gitian.sigs
   
 	export SIGNER=(your gitian key, ie bluematt, sipa, etc)
 	export VERSION=(new version, e.g. 0.8.0)
@@ -45,54 +45,54 @@ Release Process
 	wget 'http://downloads.sourceforge.net/project/boost/boost/1.50.0/boost_1_50_0.tar.bz2'
 	wget 'http://releases.qt-project.org/qt4/source/qt-everywhere-opensource-src-4.8.3.tar.gz'
 	cd ..
-	./bin/gbuild ../megacoin/contrib/gitian-descriptors/boost-win32.yml
+	./bin/gbuild ../bullyon/contrib/gitian-descriptors/boost-win32.yml
 	mv build/out/boost-win32-1.50.0-gitian2.zip inputs/
-	./bin/gbuild ../megacoin/contrib/gitian-descriptors/qt-win32.yml
+	./bin/gbuild ../bullyon/contrib/gitian-descriptors/qt-win32.yml
 	mv build/out/qt-win32-4.8.3-gitian-r1.zip inputs/
-	./bin/gbuild ../megacoin/contrib/gitian-descriptors/deps-win32.yml
-	mv build/out/megacoin-deps-0.0.5.zip inputs/
+	./bin/gbuild ../bullyon/contrib/gitian-descriptors/deps-win32.yml
+	mv build/out/bullyon-deps-0.0.5.zip inputs/
 
- Build megacoind and megacoin-qt on Linux32, Linux64, and Win32:
+ Build bullyond and bullyon-qt on Linux32, Linux64, and Win32:
   
-	./bin/gbuild --commit megacoin=v${VERSION} ../megacoin/contrib/gitian-descriptors/gitian.yml
-	./bin/gsign --signer $SIGNER --release ${VERSION} --destination ../gitian.sigs/ ../megacoin/contrib/gitian-descriptors/gitian.yml
+	./bin/gbuild --commit bullyon=v${VERSION} ../bullyon/contrib/gitian-descriptors/gitian.yml
+	./bin/gsign --signer $SIGNER --release ${VERSION} --destination ../gitian.sigs/ ../bullyon/contrib/gitian-descriptors/gitian.yml
 	pushd build/out
-	zip -r megacoin-${VERSION}-linux-gitian.zip *
-	mv megacoin-${VERSION}-linux-gitian.zip ../../
+	zip -r bullyon-${VERSION}-linux-gitian.zip *
+	mv bullyon-${VERSION}-linux-gitian.zip ../../
 	popd
-	./bin/gbuild --commit megacoin=v${VERSION} ../megacoin/contrib/gitian-descriptors/gitian-win32.yml
-	./bin/gsign --signer $SIGNER --release ${VERSION}-win32 --destination ../gitian.sigs/ ../megacoin/contrib/gitian-descriptors/gitian-win32.yml
+	./bin/gbuild --commit bullyon=v${VERSION} ../bullyon/contrib/gitian-descriptors/gitian-win32.yml
+	./bin/gsign --signer $SIGNER --release ${VERSION}-win32 --destination ../gitian.sigs/ ../bullyon/contrib/gitian-descriptors/gitian-win32.yml
 	pushd build/out
-	zip -r megacoin-${VERSION}-win32-gitian.zip *
-	mv megacoin-${VERSION}-win32-gitian.zip ../../
+	zip -r bullyon-${VERSION}-win32-gitian.zip *
+	mv bullyon-${VERSION}-win32-gitian.zip ../../
 	popd
 
   Build output expected:
 
-  1. linux 32-bit and 64-bit binaries + source (megacoin-${VERSION}-linux-gitian.zip)
-  2. windows 32-bit binary, installer + source (megacoin-${VERSION}-win32-gitian.zip)
+  1. linux 32-bit and 64-bit binaries + source (bullyon-${VERSION}-linux-gitian.zip)
+  2. windows 32-bit binary, installer + source (bullyon-${VERSION}-win32-gitian.zip)
   3. Gitian signatures (in gitian.sigs/${VERSION}[-win32]/(your gitian key)/
 
 repackage gitian builds for release as stand-alone zip/tar/installer exe
 
 **Linux .tar.gz:**
 
-	unzip megacoin-${VERSION}-linux-gitian.zip -d megacoin-${VERSION}-linux
-	tar czvf megacoin-${VERSION}-linux.tar.gz megacoin-${VERSION}-linux
-	rm -rf megacoin-${VERSION}-linux
+	unzip bullyon-${VERSION}-linux-gitian.zip -d bullyon-${VERSION}-linux
+	tar czvf bullyon-${VERSION}-linux.tar.gz bullyon-${VERSION}-linux
+	rm -rf bullyon-${VERSION}-linux
 
 **Windows .zip and setup.exe:**
 
-	unzip megacoin-${VERSION}-win32-gitian.zip -d megacoin-${VERSION}-win32
-	mv megacoin-${VERSION}-win32/megacoin-*-setup.exe .
-	zip -r megacoin-${VERSION}-win32.zip megacoin-${VERSION}-win32
-	rm -rf megacoin-${VERSION}-win32
+	unzip bullyon-${VERSION}-win32-gitian.zip -d bullyon-${VERSION}-win32
+	mv bullyon-${VERSION}-win32/bullyon-*-setup.exe .
+	zip -r bullyon-${VERSION}-win32.zip bullyon-${VERSION}-win32
+	rm -rf bullyon-${VERSION}-win32
 
 **Perform Mac build:**
 
   OSX binaries are created by Gavin Andresen on a 32-bit, OSX 10.6 machine.
 
-	qmake RELEASE=1 USE_UPNP=1 USE_QRCODE=1 megacoin-qt.pro
+	qmake RELEASE=1 USE_UPNP=1 USE_QRCODE=1 bullyon-qt.pro
 	make
 	export QTDIR=/opt/local/share/qt4  # needed to find translations/qt_*.qm files
 	T=$(contrib/qt_translations.py $QTDIR/translations src/qt/locale)
@@ -110,14 +110,14 @@ repackage gitian builds for release as stand-alone zip/tar/installer exe
 
 * create SHA256SUMS for builds, and PGP-sign it
 
-* update megacoin.co.nz version
+* update bullyon.co.nz version
   make sure all OS download links go to the right versions
 
 * update forum version
 
 * update wiki download links
 
-* update wiki changelog: [http://megacoin.co.nz/](http://megacoin.co.nz/)
+* update wiki changelog: [http://bullyon.co.nz/](http://bullyon.co.nz/)
 
 Commit your signature to gitian.sigs:
 
@@ -132,32 +132,32 @@ Commit your signature to gitian.sigs:
 
 ### After 3 or more people have gitian-built, repackage gitian-signed zips:
 
-From a directory containing megacoin source, gitian.sigs and gitian zips
+From a directory containing bullyon source, gitian.sigs and gitian zips
 
 	export VERSION=(new version, e.g. 0.8.0)
-	mkdir megacoin-${VERSION}-linux-gitian
-	pushd megacoin-${VERSION}-linux-gitian
-	unzip ../megacoin-${VERSION}-linux-gitian.zip
+	mkdir bullyon-${VERSION}-linux-gitian
+	pushd bullyon-${VERSION}-linux-gitian
+	unzip ../bullyon-${VERSION}-linux-gitian.zip
 	mkdir gitian
-	cp ../megacoin/contrib/gitian-downloader/*.pgp ./gitian/
+	cp ../bullyon/contrib/gitian-downloader/*.pgp ./gitian/
 	for signer in $(ls ../gitian.sigs/${VERSION}/); do
-	 cp ../gitian.sigs/${VERSION}/${signer}/megacoin-build.assert ./gitian/${signer}-build.assert
-	 cp ../gitian.sigs/${VERSION}/${signer}/megacoin-build.assert.sig ./gitian/${signer}-build.assert.sig
+	 cp ../gitian.sigs/${VERSION}/${signer}/bullyon-build.assert ./gitian/${signer}-build.assert
+	 cp ../gitian.sigs/${VERSION}/${signer}/bullyon-build.assert.sig ./gitian/${signer}-build.assert.sig
 	done
-	zip -r megacoin-${VERSION}-linux-gitian.zip *
-	cp megacoin-${VERSION}-linux-gitian.zip ../
+	zip -r bullyon-${VERSION}-linux-gitian.zip *
+	cp bullyon-${VERSION}-linux-gitian.zip ../
 	popd
-	mkdir megacoin-${VERSION}-win32-gitian
-	pushd megacoin-${VERSION}-win32-gitian
-	unzip ../megacoin-${VERSION}-win32-gitian.zip
+	mkdir bullyon-${VERSION}-win32-gitian
+	pushd bullyon-${VERSION}-win32-gitian
+	unzip ../bullyon-${VERSION}-win32-gitian.zip
 	mkdir gitian
-	cp ../megacoin/contrib/gitian-downloader/*.pgp ./gitian/
+	cp ../bullyon/contrib/gitian-downloader/*.pgp ./gitian/
 	for signer in $(ls ../gitian.sigs/${VERSION}-win32/); do
-	 cp ../gitian.sigs/${VERSION}-win32/${signer}/megacoin-build.assert ./gitian/${signer}-build.assert
-	 cp ../gitian.sigs/${VERSION}-win32/${signer}/megacoin-build.assert.sig ./gitian/${signer}-build.assert.sig
+	 cp ../gitian.sigs/${VERSION}-win32/${signer}/bullyon-build.assert ./gitian/${signer}-build.assert
+	 cp ../gitian.sigs/${VERSION}-win32/${signer}/bullyon-build.assert.sig ./gitian/${signer}-build.assert.sig
 	done
-	zip -r megacoin-${VERSION}-win32-gitian.zip *
-	cp megacoin-${VERSION}-win32-gitian.zip ../
+	zip -r bullyon-${VERSION}-win32-gitian.zip *
+	cp bullyon-${VERSION}-win32-gitian.zip ../
 	popd
 
 - Upload gitian zips to SourceForge

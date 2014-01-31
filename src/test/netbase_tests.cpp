@@ -52,10 +52,10 @@ bool static TestSplitHost(string test, string host, int port)
 
 BOOST_AUTO_TEST_CASE(netbase_splithost)
 {
-    BOOST_CHECK(TestSplitHost("www.megacoin.co.nz", "www.megacoin.co.nz", -1));
-    BOOST_CHECK(TestSplitHost("[www.megacoin.co.nz]", "www.megacoin.co.nz", -1));
-    BOOST_CHECK(TestSplitHost("www.megacoin.co.nz:80", "www.megacoin.co.nz", 80));
-    BOOST_CHECK(TestSplitHost("[www.megacoin.co.nz]:80", "www.megacoin.co.nz", 80));
+    BOOST_CHECK(TestSplitHost("www.bullyon.co.nz", "www.bullyon.co.nz", -1));
+    BOOST_CHECK(TestSplitHost("[www.bullyon.co.nz]", "www.bullyon.co.nz", -1));
+    BOOST_CHECK(TestSplitHost("www.bullyon.co.nz:80", "www.bullyon.co.nz", 80));
+    BOOST_CHECK(TestSplitHost("[www.bullyon.co.nz]:80", "www.bullyon.co.nz", 80));
     BOOST_CHECK(TestSplitHost("127.0.0.1", "127.0.0.1", -1));
     BOOST_CHECK(TestSplitHost("127.0.0.1:7951", "127.0.0.1", 7951));
     BOOST_CHECK(TestSplitHost("[127.0.0.1]", "127.0.0.1", -1));

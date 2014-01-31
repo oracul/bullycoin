@@ -1,5 +1,5 @@
 /*
- * Qt4 megacoin GUI.
+ * Qt4 bullyon GUI.
  *
  * W.J. van der Laan 2011-2012
  * The Bitcoin Developers 2011-2013
@@ -10,7 +10,7 @@
 
 #include <QStackedWidget>
 
-class MegacoinGUI;
+class bullyonGUI;
 class ClientModel;
 class WalletModel;
 class TransactionView;
@@ -36,16 +36,16 @@ class WalletView : public QStackedWidget
     Q_OBJECT
 
 public:
-    explicit WalletView(QWidget *parent, MegacoinGUI *_gui);
+    explicit WalletView(QWidget *parent, bullyonGUI *_gui);
     ~WalletView();
 
-    void setMegacoinGUI(MegacoinGUI *gui);
+    void setbullyonGUI(bullyonGUI *gui);
     /** Set the client model.
         The client model represents the part of the core that communicates with the P2P network, and is wallet-agnostic.
     */
     void setClientModel(ClientModel *clientModel);
     /** Set the wallet model.
-        The wallet model represents a megacoin wallet, and offers access to the list of transactions, address book and sending
+        The wallet model represents a bullyon wallet, and offers access to the list of transactions, address book and sending
         functionality.
     */
     void setWalletModel(WalletModel *walletModel);
@@ -55,7 +55,7 @@ public:
     void showOutOfSyncWarning(bool fShow);
 
 private:
-    MegacoinGUI *gui;
+    bullyonGUI *gui;
     ClientModel *clientModel;
     WalletModel *walletModel;
 

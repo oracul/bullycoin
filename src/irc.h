@@ -2,8 +2,8 @@
 // Copyright (c) 2009-2012 The Bitcoin developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
-#ifndef MEGACOIN_IRC_H
-#define MEGACOIN_IRC_H
+#ifndef bullyon_IRC_H
+#define bullyon_IRC_H
 
 void ThreadIRCSeed();
 

@@ -1,13 +1,13 @@
 /*
- * Qt4 megacoin GUI.
+ * Qt4 bullyon GUI.
  *
  * W.J. van der Laan 2011-2012
- * The Megacoin Developers 2011-2012
+ * The bullyon Developers 2011-2012
  */
 
 #include <QApplication>
 
-#include "megacoingui.h"
+#include "bullyongui.h"
 
 #include "transactiontablemodel.h"
 #include "optionsdialog.h"
@@ -17,7 +17,7 @@
 #include "walletframe.h"
 #include "optionsmodel.h"
 #include "transactiondescdialog.h"
-#include "megacoinunits.h"
+#include "bullyonunits.h"
 #include "guiconstants.h"
 #include "notificator.h"
 #include "guiutil.h"
@@ -55,9 +55,9 @@
 
 #include <iostream>
 
-const QString MegacoinGUI::DEFAULT_WALLET = "~Default";
+const QString bullyonGUI::DEFAULT_WALLET = "~Default";
 
-MegacoinGUI::MegacoinGUI(bool fIsTestnet, QWidget *parent) :
+bullyonGUI::bullyonGUI(bool fIsTestnet, QWidget *parent) :
     QMainWindow(parent),
     clientModel(0),
     encryptWalletAction(0),
@@ -73,24 +73,24 @@ MegacoinGUI::MegacoinGUI(bool fIsTestnet, QWidget *parent) :
 #ifndef Q_OS_MAC
     if (!fIsTestnet)
     {
-        setWindowTitle(tr("Megacoin") + " - " + tr("Wallet"));
-        QApplication::setWindowIcon(QIcon(":icons/megacoin"));
-        setWindowIcon(QIcon(":icons/megacoin"));
+        setWindowTitle(tr("bullyon") + " - " + tr("Wallet"));
+        QApplication::setWindowIcon(QIcon(":icons/bullyon"));
+        setWindowIcon(QIcon(":icons/bullyon"));
     }
     else
     {
-        setWindowTitle(tr("Megacoin") + " - " + tr("Wallet") + " " + tr("[testnet]"));
-        QApplication::setWindowIcon(QIcon(":icons/megacoin_testnet"));
-        setWindowIcon(QIcon(":icons/megacoin_testnet"));
+        setWindowTitle(tr("bullyon") + " - " + tr("Wallet") + " " + tr("[testnet]"));
+        QApplication::setWindowIcon(QIcon(":icons/bullyon_testnet"));
+        setWindowIcon(QIcon(":icons/bullyon_testnet"));
     }
 #else
     setUnifiedTitleAndToolBarOnMac(true);
     QApplication::setAttribute(Qt::AA_DontShowIconsInMenus);
 
     if (!fIsTestnet)
-        MacDockIconHandler::instance()->setIcon(QIcon(":icons/megacoin"));
+        MacDockIconHandler::instance()->setIcon(QIcon(":icons/bullyon"));
     else
-        MacDockIconHandler::instance()->setIcon(QIcon(":icons/megacoin_testnet"));
+        MacDockIconHandler::instance()->setIcon(QIcon(":icons/bullyon_testnet"));
 #endif
     // Create wallet frame and make it the central widget
     walletFrame = new WalletFrame(this);
@@ -163,7 +163,7 @@ MegacoinGUI::MegacoinGUI(bool fIsTestnet, QWidget *parent) :
     this->installEventFilter(this);
 }
 
-MegacoinGUI::~MegacoinGUI()
+bullyonGUI::~bullyonGUI()
 {
     saveWindowGeometry();
     if(trayIcon) // Hide tray icon, as deleting will let it linger until quit (on Ubuntu)
@@ -174,7 +174,7 @@ MegacoinGUI::~MegacoinGUI()
 #endif
 }
 
-void MegacoinGUI::createActions(bool fIsTestnet)
+void bullyonGUI::createActions(bool fIsTestnet)
 {
     QActionGroup *tabGroup = new QActionGroup(this);
 
@@ -186,7 +186,7 @@ void MegacoinGUI::createActions(bool fIsTestnet)
     tabGroup->addAction(overviewAction);
 
     sendCoinsAction = new QAction(QIcon(":/icons/send"), tr("&Send"), this);
-    sendCoinsAction->setStatusTip(tr("Send coins to a Megacoin address"));
+    sendCoinsAction->setStatusTip(tr("Send coins to a bullyon address"));
     sendCoinsAction->setToolTip(sendCoinsAction->statusTip());
     sendCoinsAction->setCheckable(true);
     sendCoinsAction->setShortcut(QKeySequence(Qt::ALT + Qt::Key_2));
@@ -229,21 +229,21 @@ void MegacoinGUI::createActions(bool fIsTestnet)
     quitAction->setShortcut(QKeySequence(Qt::CTRL + Qt::Key_Q));
     quitAction->setMenuRole(QAction::QuitRole);
     if (!fIsTestnet)
-        aboutAction = new QAction(QIcon(":/icons/megacoin"), tr("&About Megacoin"), this);
+        aboutAction = new QAction(QIcon(":/icons/bullyon"), tr("&About bullyon"), this);
     else
-        aboutAction = new QAction(QIcon(":/icons/megacoin_testnet"), tr("&About Megacoin"), this);
-    aboutAction->setStatusTip(tr("Show information about Megacoin"));
+        aboutAction = new QAction(QIcon(":/icons/bullyon_testnet"), tr("&About bullyon"), this);
+    aboutAction->setStatusTip(tr("Show information about bullyon"));
     aboutAction->setMenuRole(QAction::AboutRole);
     aboutQtAction = new QAction(QIcon(":/trolltech/qmessagebox/images/qtlogo-64.png"), tr("About &Qt"), this);
     aboutQtAction->setStatusTip(tr("Show information about Qt"));
     aboutQtAction->setMenuRole(QAction::AboutQtRole);
     optionsAction = new QAction(QIcon(":/icons/options"), tr("&Options..."), this);
-    optionsAction->setStatusTip(tr("Modify configuration options for Megacoin"));
+    optionsAction->setStatusTip(tr("Modify configuration options for bullyon"));
     optionsAction->setMenuRole(QAction::PreferencesRole);
     if (!fIsTestnet)
-        toggleHideAction = new QAction(QIcon(":/icons/megacoin"), tr("&Show / Hide"), this);
+        toggleHideAction = new QAction(QIcon(":/icons/bullyon"), tr("&Show / Hide"), this);
     else
-        toggleHideAction = new QAction(QIcon(":/icons/megacoin_testnet"), tr("&Show / Hide"), this);
+        toggleHideAction = new QAction(QIcon(":/icons/bullyon_testnet"), tr("&Show / Hide"), this);
     toggleHideAction->setStatusTip(tr("Show or hide the main Window"));
 
     encryptWalletAction = new QAction(QIcon(":/icons/lock_closed"), tr("&Encrypt Wallet..."), this);
@@ -254,9 +254,9 @@ void MegacoinGUI::createActions(bool fIsTestnet)
     changePassphraseAction = new QAction(QIcon(":/icons/key"), tr("&Change Passphrase..."), this);
     changePassphraseAction->setStatusTip(tr("Change the passphrase used for wallet encryption"));
     signMessageAction = new QAction(QIcon(":/icons/edit"), tr("Sign &message..."), this);
-    signMessageAction->setStatusTip(tr("Sign messages with your Megacoin addresses to prove you own them"));
+    signMessageAction->setStatusTip(tr("Sign messages with your bullyon addresses to prove you own them"));
     verifyMessageAction = new QAction(QIcon(":/icons/transaction_0"), tr("&Verify message..."), this);
-    verifyMessageAction->setStatusTip(tr("Verify messages to ensure they were signed with specified Megacoin addresses"));
+    verifyMessageAction->setStatusTip(tr("Verify messages to ensure they were signed with specified bullyon addresses"));
 
     openRPCConsoleAction = new QAction(QIcon(":/icons/debugwindow"), tr("&Debug window"), this);
     openRPCConsoleAction->setStatusTip(tr("Open debugging and diagnostic console"));
@@ -273,7 +273,7 @@ void MegacoinGUI::createActions(bool fIsTestnet)
     connect(verifyMessageAction, SIGNAL(triggered()), this, SLOT(gotoVerifyMessageTab()));
 }
 
-void MegacoinGUI::createMenuBar()
+void bullyonGUI::createMenuBar()
 {
 #ifdef Q_OS_MAC
     // Create a decoupled menu bar on Mac which stays even if the window is closed
@@ -304,7 +304,7 @@ void MegacoinGUI::createMenuBar()
     help->addAction(aboutQtAction);
 }
 
-void MegacoinGUI::createToolBars()
+void bullyonGUI::createToolBars()
 {
     QToolBar *toolbar = addToolBar(tr("Tabs toolbar"));
     toolbar->setToolButtonStyle(Qt::ToolButtonTextBesideIcon);
@@ -315,7 +315,7 @@ void MegacoinGUI::createToolBars()
     toolbar->addAction(addressBookAction);
 }
 
-void MegacoinGUI::setClientModel(ClientModel *clientModel)
+void bullyonGUI::setClientModel(ClientModel *clientModel)
 {
     this->clientModel = clientModel;
     if(clientModel)
@@ -339,34 +339,34 @@ void MegacoinGUI::setClientModel(ClientModel *clientModel)
     }
 }
 
-bool MegacoinGUI::addWallet(const QString& name, WalletModel *walletModel)
+bool bullyonGUI::addWallet(const QString& name, WalletModel *walletModel)
 {
     return walletFrame->addWallet(name, walletModel);
 }
 
-bool MegacoinGUI::setCurrentWallet(const QString& name)
+bool bullyonGUI::setCurrentWallet(const QString& name)
 {
     return walletFrame->setCurrentWallet(name);
 }
 
-void MegacoinGUI::removeAllWallets()
+void bullyonGUI::removeAllWallets()
 {
     walletFrame->removeAllWallets();
 }
 
-void MegacoinGUI::createTrayIcon(bool fIsTestnet)
+void bullyonGUI::createTrayIcon(bool fIsTestnet)
 {
 #ifndef Q_OS_MAC
     trayIcon = new QSystemTrayIcon(this);
 
     if (!fIsTestnet)
     {
-        trayIcon->setToolTip(tr("Megacoin client"));
+        trayIcon->setToolTip(tr("bullyon client"));
         trayIcon->setIcon(QIcon(":/icons/toolbar"));
     }
     else
     {
-        trayIcon->setToolTip(tr("Megacoin client") + " " + tr("[testnet]"));
+        trayIcon->setToolTip(tr("bullyon client") + " " + tr("[testnet]"));
         trayIcon->setIcon(QIcon(":/icons/toolbar_testnet"));
     }
 
@@ -376,7 +376,7 @@ void MegacoinGUI::createTrayIcon(bool fIsTestnet)
     notificator = new Notificator(QApplication::applicationName(), trayIcon);
 }
 
-void MegacoinGUI::createTrayIconMenu()
+void bullyonGUI::createTrayIconMenu()
 {
     QMenu *trayIconMenu;
 #ifndef Q_OS_MAC
@@ -414,7 +414,7 @@ void MegacoinGUI::createTrayIconMenu()
 }
 
 #ifndef Q_OS_MAC
-void MegacoinGUI::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
+void bullyonGUI::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 {
     if(reason == QSystemTrayIcon::Trigger)
     {
@@ -424,14 +424,14 @@ void MegacoinGUI::trayIconActivated(QSystemTrayIcon::ActivationReason reason)
 }
 #endif
 
-void MegacoinGUI::saveWindowGeometry()
+void bullyonGUI::saveWindowGeometry()
 {
     QSettings settings;
     settings.setValue("nWindowPos", pos());
     settings.setValue("nWindowSize", size());
 }
 
-void MegacoinGUI::restoreWindowGeometry()
+void bullyonGUI::restoreWindowGeometry()
 {
     QSettings settings;
     QPoint pos = settings.value("nWindowPos").toPoint();
@@ -446,7 +446,7 @@ void MegacoinGUI::restoreWindowGeometry()
     move(pos);
 }
 
-void MegacoinGUI::optionsClicked()
+void bullyonGUI::optionsClicked()
 {
     if(!clientModel || !clientModel->getOptionsModel())
         return;
@@ -455,49 +455,49 @@ void MegacoinGUI::optionsClicked()
     dlg.exec();
 }
 
-void MegacoinGUI::aboutClicked()
+void bullyonGUI::aboutClicked()
 {
     AboutDialog dlg;
     dlg.setModel(clientModel);
     dlg.exec();
 }
 
-void MegacoinGUI::gotoOverviewPage()
+void bullyonGUI::gotoOverviewPage()
 {
     if (walletFrame) walletFrame->gotoOverviewPage();
 }
 
-void MegacoinGUI::gotoHistoryPage()
+void bullyonGUI::gotoHistoryPage()
 {
     if (walletFrame) walletFrame->gotoHistoryPage();
 }
 
-void MegacoinGUI::gotoAddressBookPage()
+void bullyonGUI::gotoAddressBookPage()
 {
     if (walletFrame) walletFrame->gotoAddressBookPage();
 }
 
-void MegacoinGUI::gotoReceiveCoinsPage()
+void bullyonGUI::gotoReceiveCoinsPage()
 {
     if (walletFrame) walletFrame->gotoReceiveCoinsPage();
 }
 
-void MegacoinGUI::gotoSendCoinsPage(QString addr)
+void bullyonGUI::gotoSendCoinsPage(QString addr)
 {
     if (walletFrame) walletFrame->gotoSendCoinsPage(addr);
 }
 
-void MegacoinGUI::gotoSignMessageTab(QString addr)
+void bullyonGUI::gotoSignMessageTab(QString addr)
 {
     if (walletFrame) walletFrame->gotoSignMessageTab(addr);
 }
 
-void MegacoinGUI::gotoVerifyMessageTab(QString addr)
+void bullyonGUI::gotoVerifyMessageTab(QString addr)
 {
     if (walletFrame) walletFrame->gotoVerifyMessageTab(addr);
 }
 
-void MegacoinGUI::setNumConnections(int count)
+void bullyonGUI::setNumConnections(int count)
 {
     QString icon;
     switch(count)
@@ -509,10 +509,10 @@ void MegacoinGUI::setNumConnections(int count)
     default: icon = ":/icons/connect_4"; break;
     }
     labelConnectionsIcon->setPixmap(QIcon(icon).pixmap(STATUSBAR_ICONSIZE,STATUSBAR_ICONSIZE));
-    labelConnectionsIcon->setToolTip(tr("%n active connection(s) to Megacoin network", "", count));
+    labelConnectionsIcon->setToolTip(tr("%n active connection(s) to bullyon network", "", count));
 }
 
-void MegacoinGUI::setNumBlocks(int count, int nTotalBlocks)
+void bullyonGUI::setNumBlocks(int count, int nTotalBlocks)
 {
     // Prevent orphan statusbar messages (e.g. hover Quit in main menu, wait until chain-sync starts -> garbelled text)
     statusBar()->clearMessage();
@@ -606,9 +606,9 @@ void MegacoinGUI::setNumBlocks(int count, int nTotalBlocks)
     progressBar->setToolTip(tooltip);
 }
 
-void MegacoinGUI::message(const QString &title, const QString &message, unsigned int style, bool *ret)
+void bullyonGUI::message(const QString &title, const QString &message, unsigned int style, bool *ret)
 {
-    QString strTitle = tr("Megacoin"); // default title
+    QString strTitle = tr("bullyon"); // default title
     // Default to information icon
     int nMBoxIcon = QMessageBox::Information;
     int nNotifyIcon = Notificator::Information;
@@ -657,7 +657,7 @@ void MegacoinGUI::message(const QString &title, const QString &message, unsigned
         notificator->notify((Notificator::Class)nNotifyIcon, strTitle, message);
 }
 
-void MegacoinGUI::changeEvent(QEvent *e)
+void bullyonGUI::changeEvent(QEvent *e)
 {
     QMainWindow::changeEvent(e);
 #ifndef Q_OS_MAC // Ignored on Mac
@@ -676,7 +676,7 @@ void MegacoinGUI::changeEvent(QEvent *e)
 #endif
 }
 
-void MegacoinGUI::closeEvent(QCloseEvent *event)
+void bullyonGUI::closeEvent(QCloseEvent *event)
 {
     if(clientModel)
     {
@@ -691,18 +691,18 @@ void MegacoinGUI::closeEvent(QCloseEvent *event)
     QMainWindow::closeEvent(event);
 }
 
-void MegacoinGUI::askFee(qint64 nFeeRequired, bool *payFee)
+void bullyonGUI::askFee(qint64 nFeeRequired, bool *payFee)
 {
     QString strMessage = tr("This transaction is over the size limit. You can still send it for a fee of %1, "
         "which goes to the nodes that process your transaction and helps to support the network. "
-        "Do you want to pay the fee?").arg(MegacoinUnits::formatWithUnit(MegacoinUnits::MEC, nFeeRequired));
+        "Do you want to pay the fee?").arg(bullyonUnits::formatWithUnit(bullyonUnits::BUL, nFeeRequired));
     QMessageBox::StandardButton retval = QMessageBox::question(
           this, tr("Confirm transaction fee"), strMessage,
           QMessageBox::Yes|QMessageBox::Cancel, QMessageBox::Yes);
     *payFee = (retval == QMessageBox::Yes);
 }
 
-void MegacoinGUI::incomingTransaction(const QString& date, int unit, qint64 amount, const QString& type, const QString& address)
+void bullyonGUI::incomingTransaction(const QString& date, int unit, qint64 amount, const QString& type, const QString& address)
 {
     // On new transaction, make an info balloon
     message((amount)<0 ? tr("Sent transaction") : tr("Incoming transaction"),
@@ -711,19 +711,19 @@ void MegacoinGUI::incomingTransaction(const QString& date, int unit, qint64 amou
                 "Type: %3\n"
                 "Address: %4\n")
                   .arg(date)
-                  .arg(MegacoinUnits::formatWithUnit(unit, amount, true))
+                  .arg(bullyonUnits::formatWithUnit(unit, amount, true))
                   .arg(type)
                   .arg(address), CClientUIInterface::MSG_INFORMATION);
 }
 
-void MegacoinGUI::dragEnterEvent(QDragEnterEvent *event)
+void bullyonGUI::dragEnterEvent(QDragEnterEvent *event)
 {
     // Accept only URIs
     if(event->mimeData()->hasUrls())
         event->acceptProposedAction();
 }
 
-void MegacoinGUI::dropEvent(QDropEvent *event)
+void bullyonGUI::dropEvent(QDropEvent *event)
 {
     if(event->mimeData()->hasUrls())
     {
@@ -739,14 +739,14 @@ void MegacoinGUI::dropEvent(QDropEvent *event)
         if (nValidUrisFound)
             walletFrame->gotoSendCoinsPage();
         else
-            message(tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid Megacoin address or malformed URI parameters."),
+            message(tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid bullyon address or malformed URI parameters."),
                       CClientUIInterface::ICON_WARNING);
     }
 
     event->acceptProposedAction();
 }
 
-bool MegacoinGUI::eventFilter(QObject *object, QEvent *event)
+bool bullyonGUI::eventFilter(QObject *object, QEvent *event)
 {
     // Catch status tip events
     if (event->type() == QEvent::StatusTip)
@@ -758,15 +758,15 @@ bool MegacoinGUI::eventFilter(QObject *object, QEvent *event)
     return QMainWindow::eventFilter(object, event);
 }
 
-void MegacoinGUI::handleURI(QString strURI)
+void bullyonGUI::handleURI(QString strURI)
 {
     // URI has to be valid
     if (!walletFrame->handleURI(strURI))
-        message(tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid Megacoin address or malformed URI parameters."),
+        message(tr("URI handling"), tr("URI can not be parsed! This can be caused by an invalid bullyon address or malformed URI parameters."),
                   CClientUIInterface::ICON_WARNING);
 }
 
-void MegacoinGUI::setEncryptionStatus(int status)
+void bullyonGUI::setEncryptionStatus(int status)
 {
     switch(status)
     {
@@ -795,7 +795,7 @@ void MegacoinGUI::setEncryptionStatus(int status)
     }
 }
 
-void MegacoinGUI::showNormalIfMinimized(bool fToggleHidden)
+void bullyonGUI::showNormalIfMinimized(bool fToggleHidden)
 {
     // activateWindow() (sometimes) helps with keyboard focus on Windows
     if (isHidden())
@@ -817,12 +817,12 @@ void MegacoinGUI::showNormalIfMinimized(bool fToggleHidden)
         hide();
 }
 
-void MegacoinGUI::toggleHidden()
+void bullyonGUI::toggleHidden()
 {
     showNormalIfMinimized(true);
 }
 
-void MegacoinGUI::detectShutdown()
+void bullyonGUI::detectShutdown()
 {
     if (ShutdownRequested())
         QMetaObject::invokeMethod(QCoreApplication::instance(), "quit", Qt::QueuedConnection);

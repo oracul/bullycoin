@@ -1,4 +1,4 @@
-#include "megacoinaddressvalidator.h"
+#include "bullyonaddressvalidator.h"
 
 /* Base58 characters are:
      "123456789ABCDEFGHJKLMNPQRSTUVWXYZabcdefghijkmnopqrstuvwxyz"
@@ -13,12 +13,12 @@
   - '0' and 'O' to 'o'
 */
 
-MegacoinAddressValidator::MegacoinAddressValidator(QObject *parent) :
+bullyonAddressValidator::bullyonAddressValidator(QObject *parent) :
     QValidator(parent)
 {
 }
 
-QValidator::State MegacoinAddressValidator::validate(QString &input, int &pos) const
+QValidator::State bullyonAddressValidator::validate(QString &input, int &pos) const
 {
     // Correction
     for(int idx=0; idx<input.size();)

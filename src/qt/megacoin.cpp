@@ -4,7 +4,7 @@
 
 #include <QApplication>
 
-#include "megacoingui.h"
+#include "bullyongui.h"
 #include "clientmodel.h"
 #include "walletmodel.h"
 #include "optionsmodel.h"
@@ -25,8 +25,8 @@
 #include <QTranslator>
 #include <QLibraryInfo>
 
-#if defined(MEGACOIN_NEED_QT_PLUGINS) && !defined(_MEGACOIN_QT_PLUGINS_INCLUDED)
-#define _MEGACOIN_QT_PLUGINS_INCLUDED
+#if defined(bullyon_NEED_QT_PLUGINS) && !defined(_bullyon_QT_PLUGINS_INCLUDED)
+#define _bullyon_QT_PLUGINS_INCLUDED
 #define __INSURE__
 #include <QtPlugin>
 Q_IMPORT_PLUGIN(qcncodecs)
@@ -40,7 +40,7 @@ Q_IMPORT_PLUGIN(qtaccessiblewidgets)
 Q_DECLARE_METATYPE(bool*)
 
 // Need a global reference for the notifications to find the GUI
-static MegacoinGUI *guiref;
+static bullyonGUI *guiref;
 static SplashScreen *splashref;
 
 static bool ThreadSafeMessageBox(const std::string& message, const std::string& caption, unsigned int style)
@@ -98,7 +98,7 @@ static void InitMessage(const std::string &message)
  */
 static std::string Translate(const char* psz)
 {
-    return QCoreApplication::translate("megacoin-core", psz).toStdString();
+    return QCoreApplication::translate("bullyon-core", psz).toStdString();
 }
 
 /* Handle runaway exceptions. Shows a message box with the problem and quits the program.
@@ -106,11 +106,11 @@ static std::string Translate(const char* psz)
 static void handleRunawayException(std::exception *e)
 {
     PrintExceptionContinue(e, "Runaway exception");
-    QMessageBox::critical(0, "Runaway exception", MegacoinGUI::tr("A fatal error occurred. Megacoin can no longer continue safely and will quit.") + QString("\n\n") + QString::fromStdString(strMiscWarning));
+    QMessageBox::critical(0, "Runaway exception", bullyonGUI::tr("A fatal error occurred. bullyon can no longer continue safely and will quit.") + QString("\n\n") + QString::fromStdString(strMiscWarning));
     exit(1);
 }
 
-#ifndef MEGACOIN_QT_TEST
+#ifndef bullyon_QT_TEST
 int main(int argc, char *argv[])
 {
     // Command-line options take precedence:
@@ -122,7 +122,7 @@ int main(int argc, char *argv[])
     QTextCodec::setCodecForCStrings(QTextCodec::codecForTr());
 #endif
 
-    Q_INIT_RESOURCE(megacoin);
+    Q_INIT_RESOURCE(bullyon);
     QApplication app(argc, argv);
 
     // Register meta types used for QMetaObject::invokeMethod
@@ -137,12 +137,12 @@ int main(int argc, char *argv[])
     // Install global event filter that makes sure that long tooltips can be word-wrapped
     app.installEventFilter(new GUIUtil::ToolTipToRichTextFilter(TOOLTIP_WRAP_THRESHOLD, &app));
 
-    // ... then megacoin.conf:
+    // ... then bullyon.conf:
     if (!boost::filesystem::is_directory(GetDataDir(false)))
     {
         // This message can not be translated, as translation is not initialized yet
-        // (which not yet possible because lang=XX can be overridden in megacoin.conf in the data directory)
-        QMessageBox::critical(0, "Megacoin",
+        // (which not yet possible because lang=XX can be overridden in bullyon.conf in the data directory)
+        QMessageBox::critical(0, "bullyon",
                               QString("Error: Specified data directory \"%1\" does not exist.").arg(QString::fromStdString(mapArgs["-datadir"])));
         return 1;
     }
@@ -150,12 +150,12 @@ int main(int argc, char *argv[])
 
     // Application identification (must be set before OptionsModel is initialized,
     // as it is used to locate QSettings)
-    QApplication::setOrganizationName("Megacoin");
-    QApplication::setOrganizationDomain("Megacoin.co.nz");
+    QApplication::setOrganizationName("bullyon");
+    QApplication::setOrganizationDomain("bullyon.co.nz");
     if(GetBoolArg("-testnet", false)) // Separate UI settings for testnet
-        QApplication::setApplicationName("Megacoin-Qt-testnet");
+        QApplication::setApplicationName("bullyon-Qt-testnet");
     else
-        QApplication::setApplicationName("Megacoin-Qt");
+        QApplication::setApplicationName("bullyon-Qt");
 
     // ... then GUI settings:
     OptionsModel optionsModel;
@@ -179,11 +179,11 @@ int main(int argc, char *argv[])
     if (qtTranslator.load("qt_" + lang_territory, QLibraryInfo::location(QLibraryInfo::TranslationsPath)))
         app.installTranslator(&qtTranslator);
 
-    // Load e.g. megacoin_de.qm (shortcut "de" needs to be defined in megacoin.qrc)
+    // Load e.g. bullyon_de.qm (shortcut "de" needs to be defined in bullyon.qrc)
     if (translatorBase.load(lang, ":/translations/"))
         app.installTranslator(&translatorBase);
 
-    // Load e.g. megacoin_de_DE.qm (shortcut "de_DE" needs to be defined in megacoin.qrc)
+    // Load e.g. bullyon_de_DE.qm (shortcut "de_DE" needs to be defined in bullyon.qrc)
     if (translator.load(lang_territory, ":/translations/"))
         app.installTranslator(&translator);
 
@@ -221,7 +221,7 @@ int main(int argc, char *argv[])
 
         boost::thread_group threadGroup;
 
-        MegacoinGUI window(GetBoolArg("-testnet", false), 0);
+        bullyonGUI window(GetBoolArg("-testnet", false), 0);
         guiref = &window;
 
         QTimer* pollShutdownTimer = new QTimer(guiref);
@@ -257,7 +257,7 @@ int main(int argc, char *argv[])
                 }
 
                 // Now that initialization/startup is done, process any command-line
-                // megacoin: URIs
+                // bullyon: URIs
                 QObject::connect(paymentServer, SIGNAL(receivedURI(QString)), &window, SLOT(handleURI(QString)));
                 QTimer::singleShot(100, paymentServer, SLOT(uiReady()));
 
@@ -268,7 +268,7 @@ int main(int argc, char *argv[])
                 window.removeAllWallets();
                 guiref = 0;
             }
-            // Shutdown the core and its threads, but don't exit Megacoin-Qt here
+            // Shutdown the core and its threads, but don't exit bullyon-Qt here
             threadGroup.interrupt_all();
             threadGroup.join_all();
             Shutdown();
@@ -287,4 +287,4 @@ int main(int argc, char *argv[])
     }
     return 0;
 }
-#endif // MEGACOIN_QT_TEST
+#endif // bullyon_QT_TEST

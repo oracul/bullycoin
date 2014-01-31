@@ -3,7 +3,7 @@
 // Copyright (c) 2011-2012 Tenebrix, Litecoin developers
 // Copyright (c) 2012-2013 Freicoin developers
 // Copyright (c) 2013-2079 Dr. Kimoto Chan
-// Copyright (c) 2013-2079 The Megacoin developers
+// Copyright (c) 2013-2079 The bullyon developers
 // Distributed under the MIT/X11 software license, see the accompanying
 // file COPYING or http://www.opensource.org/licenses/mit-license.php.
 
@@ -70,7 +70,7 @@ map<uint256, map<uint256, CDataStream*> > mapOrphanTransactionsByPrev;
 // Constant stuff for coinbase transactions we create:
 CScript COINBASE_FLAGS;
 
-const string strMessageMagic = "Megacoin Signed Message:\n";
+const string strMessageMagic = "bullyon Signed Message:\n";
 
 double dHashesPerSec = 0.0;
 int64 nHPSTimerStart = 0;
@@ -374,7 +374,7 @@ bool CTxOut::IsDust() const
     // to spend something, then we consider it dust.
     // A typical txout is 33 bytes big, and will
     // need a CTxIn of at least 148 bytes to spend,
-    // so dust is a txout less than 54 uMEC
+    // so dust is a txout less than 54 uBUL
     // (5430 satoshis) with default nMinRelayTxFee
     return ((nValue*1000)/(3*((int)GetSerializeSize(SER_DISK,0)+148)) < CTransaction::nMinRelayTxFee);
 }
@@ -610,7 +610,7 @@ int64 CTransaction::GetMinFee(unsigned int nBlockSize, bool fAllowFree,
         if (nBlockSize == 1)
         {
             // Transactions under 10K are free
-            // (about 4500 MEC if made of 50 MEC inputs)
+            // (about 4500 BUL if made of 50 BUL inputs)
             if (nBytes < 10000)
                 nMinFee = 0;
         }
@@ -1274,7 +1274,7 @@ unsigned int static GetNextWorkRequired_V1(const CBlockIndex* pindexLast, const 
 }
 
 unsigned int static KimotoGravityWell(const CBlockIndex* pindexLast, const CBlockHeader *pblock, uint64 TargetBlocksSpacingSeconds, uint64 PastBlocksMin, uint64 PastBlocksMax) {
-	/* current difficulty formula, megacoin - kimoto gravity well */
+	/* current difficulty formula, bullyon - kimoto gravity well */
 	const CBlockIndex  *BlockLastSolved				= pindexLast;
 	const CBlockIndex  *BlockReading				= pindexLast;
 	const CBlockHeader *BlockCreating				= pblock;
@@ -1774,7 +1774,7 @@ bool FindUndoPos(CValidationState &state, int nFile, CDiskBlockPos &pos, unsigne
 static CCheckQueue<CScriptCheck> scriptcheckqueue(128);
 
 void ThreadScriptCheck() {
-    RenameThread("megacoin-scriptch");
+    RenameThread("bullyon-scriptch");
     scriptcheckqueue.Thread();
 }
 
@@ -4248,7 +4248,7 @@ bool SendMessages(CNode* pto, bool fSendTrickle)
 
 //////////////////////////////////////////////////////////////////////////////
 //
-// MegacoinMiner
+// bullyonMiner
 //
 
 int static FormatHashBlocks(void* pbuffer, unsigned int len)
@@ -4691,7 +4691,7 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
         return false;
 
     //// debug print
-    printf("MegacoinMiner:\n");
+    printf("bullyonMiner:\n");
     printf("proof-of-work found  \n  hash: %s  \ntarget: %s\n", hash.GetHex().c_str(), hashTarget.GetHex().c_str());
     pblock->print();
     printf("generated %s\n", FormatMoney(pblock->vtx[0].vout[0].nValue).c_str());
@@ -4700,7 +4700,7 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
     {
         LOCK(cs_main);
         if (pblock->hashPrevBlock != hashBestChain)
-            return error("MegacoinMiner : generated block is stale");
+            return error("bullyonMiner : generated block is stale");
 
         // Remove key from key pool
         reservekey.KeepKey();
@@ -4714,17 +4714,17 @@ bool CheckWork(CBlock* pblock, CWallet& wallet, CReserveKey& reservekey)
         // Process this block the same as if we had received it from another node
         CValidationState state;
         if (!ProcessBlock(state, NULL, pblock))
-            return error("MegacoinMiner : ProcessBlock, block not accepted");
+            return error("bullyonMiner : ProcessBlock, block not accepted");
     }
 
     return true;
 }
 
-void static MegacoinMiner(CWallet *pwallet)
+void static bullyonMiner(CWallet *pwallet)
 {
-    printf("MegacoinMiner started\n");
+    printf("bullyonMiner started\n");
     SetThreadPriority(THREAD_PRIORITY_LOWEST);
-    RenameThread("megacoin-miner");
+    RenameThread("bullyon-miner");
 
     // Each thread has its own key and counter
     CReserveKey reservekey(pwallet);
@@ -4746,7 +4746,7 @@ void static MegacoinMiner(CWallet *pwallet)
         CBlock *pblock = &pblocktemplate->block;
         IncrementExtraNonce(pblock, pindexPrev, nExtraNonce);
 
-        printf("Running MegacoinMiner with %"PRIszu" transactions in block (%u bytes)\n", pblock->vtx.size(),
+        printf("Running bullyonMiner with %"PRIszu" transactions in block (%u bytes)\n", pblock->vtx.size(),
                ::GetSerializeSize(*pblock, SER_NETWORK, PROTOCOL_VERSION));
 
         //
@@ -4876,12 +4876,12 @@ void static MegacoinMiner(CWallet *pwallet)
     } }
     catch (boost::thread_interrupted)
     {
-        printf("MegacoinMiner terminated\n");
+        printf("bullyonMiner terminated\n");
         throw;
     }
 }
 
-void GenerateMegacoins(bool fGenerate, CWallet* pwallet)
+void Generatebullyons(bool fGenerate, CWallet* pwallet)
 {
     static boost::thread_group* minerThreads = NULL;
 
@@ -4901,7 +4901,7 @@ void GenerateMegacoins(bool fGenerate, CWallet* pwallet)
 
     minerThreads = new boost::thread_group();
     for (int i = 0; i < nThreads; i++)
-        minerThreads->create_thread(boost::bind(&MegacoinMiner, pwallet));
+        minerThreads->create_thread(boost::bind(&bullyonMiner, pwallet));
 }
 
 // Amount compression:

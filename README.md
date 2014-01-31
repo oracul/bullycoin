@@ -1,9 +1,9 @@
 
-美卡币, 您的全球货币 / Megacoin, Your Global Currency
+美卡币, 您的全球货币 / bullyon, Your Global Currency
 ====================================================================================
 
 
-关于美卡币 / About Megacoin
+关于美卡币 / About bullyon
 ------------------------------------------------------------------------------------
 
 美卡币是一种新型的分散型网络货币。
@@ -15,14 +15,14 @@
 你可以通过免费挖矿或在交易场所交易来获得美卡币。
 http://美卡币.com/
 
-Megacoin is a new type of decentralized currency.
+bullyon is a new type of decentralized currency.
 Not minted or endorsed by any nation, but by users across the globe.  
-Anywhere there is internet, you can send or receive Megacoins.  Even in outer space.  
-There are very little rules for Megacoin.  
-To prevent inflation only a limited supply of 42 million Megacoins will ever exist.  
-Megacoins are mined by users at a set rate for decades into the future.  
-You can get Megacoins for free by mining or trading for them on an exchange.
-http://megacoin.co.nz/
+Anywhere there is internet, you can send or receive bullyons.  Even in outer space.  
+There are very little rules for bullyon.  
+To prevent inflation only a limited supply of 42 million bullyons will ever exist.  
+bullyons are mined by users at a set rate for decades into the future.  
+You can get bullyons for free by mining or trading for them on an exchange.
+http://bullyon.co.nz/
 
 
 入门指导 / Get Started
@@ -32,15 +32,15 @@ http://megacoin.co.nz/
 通过本地编码然后提交git，申请加入。
 美卡币社区支持、 讨论与指南请登录： http://美卡币.com/
 
-Megacoin is a global project without bounds, so everyone is welcome to join.
+bullyon is a global project without bounds, so everyone is welcome to join.
 Developers can join by coding locally then submitting a git pull request.
-Community support, discussion and guides are found at: http://megacoin.co.nz/
+Community support, discussion and guides are found at: http://bullyon.co.nz/
 
 
-美卡币许可证 / Megacoin License
+美卡币许可证 / bullyon License
 ------------------------------------------------------------------------------------
 
-Megacoin is released under the terms of the MIT license.
+bullyon is released under the terms of the MIT license.
 See `COPYING` for more information or see http://opensource.org/licenses/MIT.
 
 美卡币软件许可证，参阅麻省理工学院许可证条款。更多信息详情，
